@@ -71,7 +71,21 @@ We are excited to announce that Dr. Sergi Benavente from the [Hospital Vall d'He
 [2025 HVH Oropharynx]: https://github.com/lycosystem/lydata/tree/main/2025-hvh-multisite
 [Hospital Vall d'Hebron]: https://hospital.vallhebron.com/en
 
+### 📂 [2025 UKF Hypopharynx]
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16963000.svg)](https://doi.org/10.5281/zenodo.16963000)
+
+> [!WARNING]
+> The dataset in the form presented here has not yet been published in a peer-reviewed journal. Content may still change until it has been accepted.
+
+We collaborated with the researchers at the [University Hospital Freiburg] (UKF) to provide a dataset on lymphatic progression patterns in patients with hypopharyngeal SCC. The dataset includes 54 patients and their lymphatic progression patterns for all available diagnostic modalities separately.
+
+[2025 UKF Hypopharynx]: https://github.com/lycosystem/lyDATA/tree/main/2025-ukf-hypopharynx
+[University Hospital Freiburg]: https://www.uniklinik-freiburg.de/en/uniklinikum.html
+
 ### 📂 [2025 UMCG Hypopharynx Larynx]
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16962870.svg)](https://doi.org/10.5281/zenodo.16962870)
 
 Through a collaboration with researchers at the [University Medical Center Groningen] (UMCG) in the Netherlands, we are able to share a large dataset on lymphatic progression patterns in patients with hypopharyngeal and laryngeal SCC. The dataset also includes some patients that underwent neck dissection and for which the lymphatic involvement was assessed pathologically.
 
@@ -83,22 +97,14 @@ Through a collaboration with researchers at the [University Medical Center Groni
 
 ### 📂 [2025 USZ Hypopharynx Larynx]
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16962705.svg)](https://doi.org/10.5281/zenodo.16962705)
+
 > [!WARNING]
 > The dataset in the form presented here has not yet been published in a peer-reviewed journal. Content may still change until it has been accepted.
 
 This folder contains the detailed patterns of lymphatic progression of 365 patients with squamous cell carcinomas (SCCs) in the hypopharynx and larynx, treated at the University Hospital Zurich (USZ) between 2013 and 2021.
 
 [2025 USZ Hypopharynx Larynx]: https://github.com/lycosystem/lyDATA/tree/main/2025-usz-hypopharynx-larynx
-
-### 📂 [2025 UKF Hypopharynx]
-
-> [!WARNING]
-> The dataset in the form presented here has not yet been published in a peer-reviewed journal. Content may still change until it has been accepted.
-
-We collaborated with the researchers at the [University Hospital Freiburg] (UKF) to provide a dataset on lymphatic progression patterns in patients with hypopharyngeal SCC. The dataset includes 54 patients and their lymphatic progression patterns for all available diagnostic modalities separately.
-
-[2025 UKF Hypopharynx]: https://github.com/lycosystem/lyDATA/tree/main/2025-ukf-hypopharynx
-[University Hospital Freiburg]: https://www.uniklinik-freiburg.de/en/uniklinikum.html
 
 ### 🔭 stay tuned for more
 

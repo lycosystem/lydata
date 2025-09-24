@@ -54,14 +54,6 @@ The data is provided as a CSV-table containing one row for each of the 54 patien
         10. **`tnm_edition:`** The edition of the TNM classification used to classify the patient [[2]](#2).
         11. **`n_stage:`** Degree of spread to regional lymph nodes.
         12. **`m_stage:`** Presence of distant metastases.
-    2. **`follow_up:`** Information about the follow-up of the patient.
-        1. **`date:`** Date of the last follow-up (format `YYYY-mm-dd`).
-        2. **`death:`** `True` if the patient has died, `False` otherwise.
-    3. **`recurrence:`** Information about the recurrence of the disease.
-        1. **`locoregional:`** `True` if the patient has had a loco-regional recurrence, `False` otherwise.
-        2. **`locoregional_date:`** Date of the loco-regional recurrence (format `YYYY-mm-dd`).
-        3. **`distant:`** `True` if the patient has had a distant recurrence, `False` otherwise.
-        4. **`distant_date:`** Date of the distant recurrence (format `YYYY-mm-dd`).
 2. **`tumor:`** Information about tumors is stored under this top-level header
     1. **`core:`** Core tumor information.
         1. **`location:`** Anatomic location of the tumor.
