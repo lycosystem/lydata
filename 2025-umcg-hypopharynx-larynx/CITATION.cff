@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+title: "lyDATA: 2025 UMCG Hypopharynx Larynx"
+abstract: >-
+  Data about clinically and pathologically diagnosed lymphatic patterns of progression
+  from 983 patients with hypopharyngeal or laryngeal squamous cell carcinomas treated
+  at the University Medical Center Groningen between 2006 and 2023.
+message: >-
+  If you use this dataset, please cite it using the metadata
+  from this file.
+type: dataset
+authors:
+  - given-names: Esmée L
+    family-names: Looman
+    affiliation: University Hospital Zurich
+    orcid: https://orcid.org/0000-0002-0026-0553
+  - given-names: Tineke W H
+    family-names: van Zon-Meijer
+    affiliation: University Medical Center Groningen
+  - given-names: Johannes A
+    family-names: Langendijk
+    affiliation: University Medical Center Groningen
+    orcid: https://orcid.org/0000-0003-1083-372X
+repository-code: 'https://github.com/lycosystem/lydata/tree/main/2025-umcg-hypopharynx-larynx'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.16962870
+    description: "Zenodo indexed version of dataset"
+license: CC BY-SA 4.0
+date-released: '2025-09-24'

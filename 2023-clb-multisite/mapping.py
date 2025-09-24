@@ -1,7 +1,7 @@
 """Map the `raw.csv` data from the 2023-clb-multisite cohort to the `data.csv` file.
 
 This module defines how the command `lyscripts data lyproxify` (see
-[here](rmnldwg.github.io/lyscripts) for the documentation of the `lyscripts` module)
+[the documentation](https://lyscripts.readthedocs.io/latest) of the `lyscripts` module)
 should handle the `raw.csv` data that was extracted at the Centre Léon Bérard in order
 to transform it into a [LyProX](https://lyprox.org)-compatible `data.csv` file.
 
@@ -30,7 +30,7 @@ Essentially, a row is excluded, if for that row `check_function(raw_data[column_
 evaluates to `True`.
 
 More information can be found in the
-[documentation](https://rmnldwg.github.io/lyscripts/lyscripts/data/lyproxify.html#exclude_patients)
+[documentation](https://lyscripts.readthedocs.io/latest/data/lyproxify.html#lyscripts.data.lyproxify.exclude_patients)
 of the `lyproxify` function.
 
 ---
@@ -41,7 +41,7 @@ This is the actual mapping dictionary that describes how to transform the `raw.c
 table into the `data.csv` table that can be fed into and understood by
 [LyProX](https://lyprox.org).
 
-See [here](https://rmnldwg.github.io/lyscripts/lyscripts/data/lyproxify.html#transform_to_lyprox)
+See [the docs](https://lyscripts.readthedocs.io/latest/data/lyproxify.html#lyscripts.data.lyproxify.transform_to_lyprox)
 for details on how this dictionary is used by the `lyproxify` script.
 
 It contains a tree-like structure that is human-readable and mimics the tree of
@@ -276,6 +276,19 @@ def sum_columns(*columns, **_kwargs) -> int:
     return res
 
 
+def create_id_counter(start: int, prefix: str) -> Callable[[], str]:
+    """Create a counter to generates IDs `start` with the given `prefix`."""
+    counter = start
+
+    def id_counter() -> str:
+        nonlocal counter
+        res = f"{prefix}{counter:04d}"
+        counter += 1
+        return res
+
+    return id_counter
+
+
 # Find the documentation for the variable below in the module-level docstring.
 EXCLUDE = [
     (("Bauwens", "Database", "0_lvl_2"), check_excluded),
@@ -285,11 +298,16 @@ EXCLUDE = [
 COLUMN_MAP = {
     "patient": {
         "__doc__": "This top-level header contains general patient information.",
-        "#": {
+        "core": {
             "__doc__": (
                 "The second level header for the `patient` columns is only a "
                 "placeholder."
             ),
+            "id": {
+                "__doc__": "The patient ID.",
+                "func": create_id_counter(start=1, prefix="CLB"),
+                "columns": [],
+            },
             "institution": {
                 "__doc__": "The institution where the patient was treated.",
                 "default": "Centre Léon Bérard",
@@ -354,10 +372,6 @@ COLUMN_MAP = {
                 "func": get_n_category,
                 "columns": TNM_COLS,
             },
-            "m_stage": {
-                "__doc__": "The M category of the patient. `-1` refers to `'X'`.",
-                "default": -1,
-            },
             "extracapsular": {
                 "__doc__": (
                     "Whether the patient had extracapsular spread. In this dataset, "
@@ -372,13 +386,10 @@ COLUMN_MAP = {
     # Tumor information
     "tumor": {
         "__doc__": "This top-level header contains general tumor information.",
-        "1": {
+        "core": {
             "__doc__": "The second level header enumerates synchronous tumors.",
             "location": {
-                "__doc__": (
-                    "The location of the tumor. This is empty for all patients because "
-                    "we can later infer it from the subsite's ICD-O-3 code."
-                ),
+                "__doc__": "The location of the prmary tumor, inferred from the ICD.",
                 "default": None,
             },
             "subsite": {
@@ -401,7 +412,7 @@ COLUMN_MAP = {
                 "__doc__": "The volume of the tumor in cm^3.",
                 "default": None,
             },
-            "stage_prefix": {
+            "t_stage_prefix": {
                 "__doc__": "The prefix of the T category.",
                 "func": get_tnm_prefix,
                 "columns": TNM_COLS,
@@ -419,7 +430,7 @@ COLUMN_MAP = {
             "This top-level header contains information from the pathology that "
             "received the LNLs resected during the neck dissection."
         ),
-        "info": {
+        "core": {
             "__doc__": "This second-level header contains general information.",
             "date": {
                 "__doc__": "The date of the pathology report (same as surgery).",
@@ -508,7 +519,7 @@ COLUMN_MAP = {
             "top-level header are essentially inferred from looking at missing "
             "entries under the pathology columns."
         ),
-        "info": {
+        "core": {
             "__doc__": "This second-level header contains general information.",
             "date": {
                 "__doc__": "The date of the diagnostic consensus (same as surgery).",
@@ -587,7 +598,7 @@ COLUMN_MAP = {
             "This top-level header contains information about the total number "
             "of dissected and pathologically investigated lymph nodes per LNL."
         ),
-        "info": {
+        "core": {
             "__doc__": "This second-level header contains general information.",
             "date": {
                 "__doc__": "The date of the neck dissection.",
@@ -697,7 +708,7 @@ COLUMN_MAP = {
             "dissected lymph nodes per LNL that were pathologically found to "
             "be positive."
         ),
-        "info": {
+        "core": {
             "__doc__": "This second-level header contains general information.",
             "date": {
                 "__doc__": "The date of the neck dissection.",

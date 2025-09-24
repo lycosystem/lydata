@@ -1,9 +1,22 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#     "lyscripts @ git+https://github.com/lycosystem/lyscripts@b72d2fe74ba4ecccfdfa8b98724b4501ff1a9145",
+#     "matplotlib==3.10.0",
+#     "pandas==2.2.3",
+#     "tueplots==0.0.17",
+# ]
+# [tool.uv]
+# exclude-newer = "2025-07-30T00:00:00Z"
+# ///
+
 """Plot the distribution over primary tumor subsites."""
 
 import argparse
 from collections import defaultdict
 from pathlib import Path
 
+import lydata  # noqa: F401
 import matplotlib.pyplot as plt
 import pandas as pd
 from lyscripts.plots import COLORS
@@ -90,11 +103,12 @@ for location, subdict in SUBSITE_DICT.items():
     JOINED_SUBSITE_DICT[location] = set()
     for icds in subdict.values():
         JOINED_SUBSITE_DICT[location] = JOINED_SUBSITE_DICT[location].union(
-            {icd.split(".")[0] for icd in icds}
+            {icd.split(".")[0] for icd in icds},
         )
 
 
-if __name__ == "__main__":
+def create_parser() -> argparse.ArgumentParser:
+    """Create the argument parser for the script."""
     parser = argparse.ArgumentParser(
         prog="subsite",
         description=__doc__,
@@ -105,14 +119,12 @@ if __name__ == "__main__":
         default="2023-isb-multisite/data.csv",
         help="Path to the data file.",
     )
-    args = parser.parse_args()
+    return parser
 
-    data = pd.read_csv(args.data, header=[0, 1, 2])
-    output_dir = args.data.parent / "figures"
-    output_dir.mkdir(exist_ok=True)
 
-    subsites = data[("tumor", "1", "subsite")]
-    subsites = subsites.value_counts()
+def group_and_sort_subsites(data: pd.DataFrame) -> dict:
+    """Group and sort data by location and subsite."""
+    subsites = data.ly.subsite.value_counts()
 
     grouped_subsites = defaultdict(lambda: defaultdict(int))
     for icd, count in subsites.items():
@@ -124,16 +136,36 @@ if __name__ == "__main__":
         sorted_subdict = dict(sorted(subdict.items(), key=lambda item: -item[1]))
         sorted_subsites[location] = sorted_subdict
 
+    return sorted_subsites
+
+
+def setup_figure() -> plt.Axes:
+    """Set up the figure for the plot."""
     plt.style.use(MPLSTYLE)
     plt.rcParams.update(
         figsizes.icml2022_full(
             nrows=1,
             ncols=1,
             height_to_width_ratio=0.4,
-        )
+        ),
     )
     plt.rcParams.update(fontsizes.icml2022())
-    fig, ax = plt.subplots()
+    _, ax = plt.subplots()
+    return ax
+
+
+def main() -> None:
+    """Run the main routine."""
+    parser = create_parser()
+    args = parser.parse_args()
+
+    data = pd.read_csv(args.data, header=[0, 1, 2])
+    output_dir = args.data.parent / "figures"
+    output_dir.mkdir(exist_ok=True)
+
+    sorted_subsites = group_and_sort_subsites(data)
+
+    ax = setup_figure()
 
     inter_loc_space, intra_loc_space = 1, 1
     cursor = 0
@@ -172,3 +204,7 @@ if __name__ == "__main__":
     ax.grid(axis="y")
 
     plt.savefig(output_dir / OUTPUT_NAME, dpi=300)
+
+
+if __name__ == "__main__":
+    main()

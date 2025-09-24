@@ -41,7 +41,7 @@ authors:
   - given-names: Vincent
     family-names: Grégoire
     affiliation: Centre Léon Bérard
-repository-code: 'https://github.com/rmnldwg/lyDATA/tree/main/2021-clb-oropharynx'
+repository-code: 'https://github.com/lycosystem/lydata/tree/main/2021-clb-oropharynx'
 identifiers:
   - type: doi
     value: 10.5281/zenodo.10204085

@@ -1,8 +1,21 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#     "lyscripts @ git+https://github.com/lycosystem/lyscripts@b72d2fe74ba4ecccfdfa8b98724b4501ff1a9145",
+#     "matplotlib==3.10.0",
+#     "pandas==2.2.3",
+#     "tueplots==0.0.17",
+# ]
+# [tool.uv]
+# exclude-newer = "2025-07-30T00:00:00Z"
+# ///
+
 """Plot the distribution over patient's T-category."""
 
 import argparse
 from pathlib import Path
 
+import lydata  # noqa: F401
 import matplotlib.pyplot as plt
 import pandas as pd
 from lyscripts.plots import COLORS
@@ -21,7 +34,8 @@ def create_label(percent):
 OUTPUT_NAME = Path(__file__).with_suffix(".png").name
 
 
-if __name__ == "__main__":
+def create_parser() -> argparse.ArgumentParser:
+    """Create the argument parser for the script."""
     parser = argparse.ArgumentParser(
         prog="age_and_sex",
         description=__doc__,
@@ -31,6 +45,12 @@ if __name__ == "__main__":
         type=Path,
         help="Path to the data file.",
     )
+    return parser
+
+
+def main() -> None:
+    """Run the script."""
+    parser = create_parser()
     args = parser.parse_args()
 
     data = pd.read_csv(args.data, header=[0, 1, 2])
@@ -50,15 +70,15 @@ if __name__ == "__main__":
         COLORS["red"],
     ]
 
-    if 0 in data[("tumor", "1", "t_stage")].values:
+    if 0 in data.ly.t_stage.values:
         t_stage_labels = ["T0", *t_stage_labels]
         colors = [COLORS["gray"], *colors]
 
-    tmp = (
-        data.groupby(("tumor", "1", "t_stage"))
+    (
+        data.groupby(("tumor", "core", "t_stage"))
         .size()
         .plot.pie(
-            y=("tumor", "1", "t_stage"),
+            y=("tumor", "core", "t_stage"),
             ax=ax,
             colors=colors,
             labels=t_stage_labels,
@@ -69,3 +89,7 @@ if __name__ == "__main__":
     )
 
     plt.savefig(output_dir / OUTPUT_NAME, dpi=300)
+
+
+if __name__ == "__main__":
+    main()

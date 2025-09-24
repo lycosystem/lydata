@@ -1,4 +1,4 @@
-![social card](https://raw.githubusercontent.com/rmnldwg/lydata/main/github-social-card.png)
+![social card](https://raw.githubusercontent.com/lycosystem/lydata/main/github-social-card.png)
 
 ## What is lyDATA?
 
@@ -29,7 +29,7 @@ The first dataset we are able to share consists of 287 patients with a primary t
 
 We have published a paper about it in *Radiotherapy & Oncology* [[9]](#9) (a preprint is also available on *medRxiv* [[10]](#10)). The dataset is described in detail and can be freely used and cited as a *Data in Brief* paper [[11]](#11).
 
-[2021 USZ Oropharynx]: https://github.com/rmnldwg/lyDATA/tree/main/2021-usz-oropharynx
+[2021 USZ Oropharynx]: https://github.com/lycosystem/lydata/tree/main/2021-usz-oropharynx
 
 ### 📂 [2021 CLB Oropharynx]
 
@@ -39,7 +39,7 @@ We have published a paper about it in *Radiotherapy & Oncology* [[9]](#9) (a pre
 
 We are glad and thankful that the research group around Prof. Vincent Grégoire from the [Centre Léon Bérard] in Lyon (France) have joined our effort to create a database of lymphatic patterns of progression by providing us with the data underlying their publication [[6]](#6). If you use this data, don't forget to cite either said publication or use the `CITATION.cff` file inside the `2021-clb-oropharynx` folder, where the `data.csv` also resides and a description of the data named `README.md`.
 
-[2021 CLB Oropharynx]: https://github.com/rmnldwg/lyDATA/tree/main/2021-clb-oropharynx
+[2021 CLB Oropharynx]: https://github.com/lycosystem/lydata/tree/main/2021-clb-oropharynx
 [Centre Léon Bérard]: https://www.centreleonberard.fr/en
 
 ### 📂 [2023 ISB Multisite]
@@ -49,7 +49,7 @@ We are glad and thankful that the research group around Prof. Vincent Grégoire 
 
 As part of a collaboration with researchers from the [Inselspital Bern] (Switzerland) around Prof. Roland Giger, we are thankful and glad to be able to publish a large and exceptionally detailed dataset on lymphatic progression of HNSCC patients, assessed by pathology. In contrast to earlier datasets, this includes not only patients with oropharyngeal tumors, but also oral cavity, hypopharynx and larynx.
 
-[2023 ISB Multisite]: https://github.com/rmnldwg/lyDATA/tree/main/2023-isb-multisite
+[2023 ISB Multisite]: https://github.com/lycosystem/lydata/tree/main/2023-isb-multisite
 [Inselspital Bern]: https://www.insel.ch/de/
 
 ### 📂 [2023 CLB Multisite]
@@ -59,18 +59,46 @@ As part of a collaboration with researchers from the [Inselspital Bern] (Switzer
 
 Completing the "2021 CLB Oropharynx" data table, these patient records detail lymphatic involvement patterns in HNSCC patients with primary tumors beyond the oropharynx. Again, they are thankfully provided by researchers in Prof. Vincent Grégoire's group and the data was extracted at the [Centre Léon Bérard].
 
-[2023 CLB Multisite]: <https://github.com/rmnldwg/lyDATA/tree/main/2023-clb-multisite>
+[2023 CLB Multisite]: <https://github.com/lycosystem/lydata/tree/main/2023-clb-multisite>
 
 ### 📂 [2025 HVH Oropharynx]
 
 [![Data-in-Brief Badge](https://img.shields.io/badge/DiB-10.1016%2Fj.dib.2025.111546-orange)](https://doi.org/10.1016/j.dib.2025.111546)
-[![Zenodo Badge](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.14976454-informational)][zenodo]
+[![Zenodo Badge](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.14976454-informational)](https://doi.org/10.5281/zenodo.14976454)
 
 We are excited to announce that Dr. Sergi Benavente from the [Hospital Vall d'Hebron] (HVH) provided a very detailed and carefully curated dataset of oroharyngeal patients as an addition to our original [2021 USZ Oropharynx] cohort.
 
-[2025 HVH Oropharynx]: https://github.com/rmnldwg/lyDATA/tree/main/2025-hvh-multisite
-[zenodo]: https://doi.org/10.5281/zenodo.14976454
+[2025 HVH Oropharynx]: https://github.com/lycosystem/lydata/tree/main/2025-hvh-multisite
 [Hospital Vall d'Hebron]: https://hospital.vallhebron.com/en
+
+### 📂 [2025 UMCG Hypopharynx Larynx]
+
+Through a collaboration with researchers at the [University Medical Center Groningen] (UMCG) in the Netherlands, we are able to share a large dataset on lymphatic progression patterns in patients with hypopharyngeal and laryngeal SCC. The dataset also includes some patients that underwent neck dissection and for which the lymphatic involvement was assessed pathologically.
+
+> [!WARNING]
+> These records are still under review at *Data in Brief*. There may still be changes to the dataset until it has been accepted.
+
+[2025 UMCG Hypopharynx Larynx]: https://github.com/lycosystem/lyDATA/tree/main/2025-umcg-hypopharynx-larynx
+[University Medical Center Groningen]: https://www.umcg.nl/en
+
+### 📂 [2025 USZ Hypopharynx Larynx]
+
+> [!WARNING]
+> The dataset in the form presented here has not yet been published in a peer-reviewed journal. Content may still change until it has been accepted.
+
+This folder contains the detailed patterns of lymphatic progression of 365 patients with squamous cell carcinomas (SCCs) in the hypopharynx and larynx, treated at the University Hospital Zurich (USZ) between 2013 and 2021.
+
+[2025 USZ Hypopharynx Larynx]: https://github.com/lycosystem/lyDATA/tree/main/2025-usz-hypopharynx-larynx
+
+### 📂 [2025 UKF Hypopharynx]
+
+> [!WARNING]
+> The dataset in the form presented here has not yet been published in a peer-reviewed journal. Content may still change until it has been accepted.
+
+We collaborated with the researchers at the [University Hospital Freiburg] (UKF) to provide a dataset on lymphatic progression patterns in patients with hypopharyngeal SCC. The dataset includes 54 patients and their lymphatic progression patterns for all available diagnostic modalities separately.
+
+[2025 UKF Hypopharynx]: https://github.com/lycosystem/lyDATA/tree/main/2025-ukf-hypopharynx
+[University Hospital Freiburg]: https://www.uniklinik-freiburg.de/en/uniklinikum.html
 
 ### 🔭 stay tuned for more
 
@@ -78,110 +106,10 @@ We are always in the process of collecting more data that we might publish soon.
 
 [roman.ludwig@usz.ch]: mailto:roman.ludwig@usz.ch
 
-## Attribution
+## Python Library
 
-Every folder that corresponds to a dataset also contains a `CITATION.cff` file which may be used to cite the respective dataset. To cite the entire repository with all datasets inside, use the `CITATION.cff` at the root of the repository (or just click the *Cite this repository* button on the right).
+Besides the data, there exists a [Python library](https://github.com/lycosystem/lydata-package) with the same name that allows easy programmatic access and some manipulation utilities for the data in this repository. It can be installed via `pip install lydata` and is documented in the [lydata documentation](https://lydata.readthedocs.io/latest).
 
-## Library
-
-Besides the data, this repository provides a Python library for loading, manipulating, and validating the available datasets.
-
-> [!WARNING]
-> This Python library is still highly experimental!
-
-[![Build](https://github.com/rmnldwg/lydata/actions/workflows/build.yml/badge.svg)](https://github.com/rmnldwg/lydata/actions/workflows/build.yml)
-[![Tests](https://github.com/rmnldwg/lydata/actions/workflows/tests.yml/badge.svg)](https://github.com/rmnldwg/lydata/actions/workflows/tests.yml)
-[![Documentation Status](https://readthedocs.org/projects/lydata/badge/?version=stable)](https://lydata.readthedocs.io/en/stable/?badge=stable)
-
-If you want to install this library, clone the repo and install it. You can do so by executing these commands:
-
-```bash
-git clone https://github.com/rmnldwg/lydata
-cd lydata
-python -m venv .venv
-source .venv/bin/activate
-pip install -U pip
-pip install .
-```
-
-You may have noticed that there are also `requirements.*` files here. These are independent of this library and instead related to reproducing the output of the Python files in the `scripts/` folder. You may ignore this.
-
-### Usage of Python Utilities
-
-The first and most common use case would probably listing and loading the published datasets:
-
-```python
-import lydata
-
-for dataset_spec in lydata.available_datasets(
-    year=2023,              # show all datasets added in 2023
-    use_github=True,        # do not search on disk, but rather on GitHub
-    ref="61a17e",           # may be some specific hash/tag/branch
-):
-    print(dataset_spec.name)
-
-# output:
-# 2023-clb-multisite
-# 2023-isb-multisite
-
-first_dataset = next(lydata.load_datasets(
-    subsite="oropharynx",   # merge data that include oropharyngeal tumor patients
-    use_github=True,        # again, search GitHub, not on disk (which is the default)
-))
-print(first_dataset.head())
-
-# output:
-#   patient                              ... positive_dissected
-#         #                              ...             contra
-#        id         institution     sex  ...                III   IV    V
-# 0    P011  Centre Léon Bérard    male  ...                0.0  0.0  0.0
-# 1    P012  Centre Léon Bérard  female  ...                0.0  0.0  0.0
-# 2    P014  Centre Léon Bérard    male  ...                0.0  0.0  NaN
-# 3    P015  Centre Léon Bérard    male  ...                0.0  0.0  NaN
-# 4    P018  Centre Léon Bérard    male  ...                NaN  NaN  NaN
-#
-# [5 rows x 82 columns]
-```
-
-And since the three-level header of the tables is a little unwieldy at times, we also provide some shortcodes via a custom pandas accessor. As soon as `lydata` is imported it can be used like this:
-
-```python
-print(first_dataset.ly.age)
-
-# output:
-# 0      67
-# 1      62
-#        ..
-# 261    60
-# 262    60
-# Name: (patient, #, age), Length: 263, dtype: int64
-```
-
-And we have implemented `Q` and `C` objects inspired by Django that allow easier querying of the tables:
-
-```python
-from lydata import C
-
-# select patients younger than 50 that are not HPV positive (includes NaNs)
-query_result = first_dataset.ly.query((C("age") < 50) & ~(C("hpv") == True))
-print(query_result)
-
-# output:
-#     patient                                  ... positive_dissected
-#           #                                  ...             contra
-#          id         institution     sex age  ...                 II  III   IV    V
-# 2      P014  Centre Léon Bérard    male  43  ...                1.0  0.0  0.0  NaN
-# 7      P024  Centre Léon Bérard    male  45  ...                NaN  NaN  NaN  NaN
-# ..      ...                 ...     ...  ..  ...                ...  ...  ...  ...
-# 212    P270  Centre Léon Bérard    male  47  ...                0.0  0.0  0.0  NaN
-# 217    P275  Centre Léon Bérard    male  49  ...                0.0  0.0  0.0  NaN
-#
-# [13 rows x 82 columns]
-```
-
-For more details and further examples or use-cases, have a look at the [official documentation](https://lydata.readthedocs.org/)
-
->>>>>>>
 ## See also
 
 ### LyProX Interface
@@ -199,12 +127,24 @@ We have developed and implemented probabilistic models for lymphatic tumor progr
 
 ## License
 
-All patient data in this repository, e.g. all files whose names end with .xlsx or .csv, as well as figures depicting characteristics of that data, are licensed under [CC BY-SA 4.0]. Attribution must be given to the owner of the repository (see the `CITATION.cff` file at the root of the repository) and the collector(s) or curator(s) of the respective dataset (see the `CITATION.cff` file inside the corresponding dataset's folder).
+Two different licenses apply to the material in this repository:
 
-The remaining material is licensed under the [MIT License]. This includes e.g. all Python files and the overall structure of the repository.
+1. All patient data in this repository, e.g. all files whose names end with .xlsx or .csv, as well as figures depicting characteristics of that data, are licensed under [CC BY-SA 4.0].
+2. Source code (e.g. Python files), documentation, and other material as well as the structure of the repository are licensed under the [MIT License].
 
 [CC BY-SA 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [MIT License]: https://mit-license.org/
+
+## Attribution
+
+If you use any of the datasets in the repository, you must give credit to the following:
+
+1. The creators of the dataset itself, as described in the `<dataset-folder>/CITATION.cff` file.
+2. The maintainers of this repository, as described in the `CITATION.cff` file at the root of the repository.
+
+## Copyright
+
+© 2021 Roman Ludwig, <roman.ludwig@usz.ch>
 
 ## References
 

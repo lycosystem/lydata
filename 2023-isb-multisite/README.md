@@ -22,13 +22,13 @@ This folder contains data about clinically and pathologically diagnosed lymphati
 
 Below we show some figures that aim to coarsely characterize the patient cohort in this directory.
 
-| ![age distribution](figures/age_and_sex.png)                               |
+| ![age distribution](figures/age_and_sex.png)                                 |
 | ---------------------------------------------------------------------------- |
-| **Figure 1:** _Distribution over age, stratified by sex and smoking status._ |
+| **Figure 1:** *Distribution over age, stratified by sex and smoking status.* |
 
-| ![T-category distribution](figures/t_category.png)                         | ![subsite distribution](figures/subsite.png)           |
-| ---------------------------------------------------------------------------- | -------------------------------------------------------- |
-| **Figure 2:** _Distribution over age, stratified by sex and smoking status._ | **Figure 3:** _Distribution over primary tumor subsite._ |
+| ![T-category distribution](figures/t_category.png) | ![subsite distribution](figures/subsite.png)             |
+| -------------------------------------------------- | -------------------------------------------------------- |
+| **Figure 2:** *Distribution over T-category.*      | **Figure 3:** *Distribution over primary tumor subsite.* |
 
 <a id="online-interface"></a>
 
@@ -40,7 +40,7 @@ We provide a user-friendly and intuitive graphical user interface to view the da
 
 ## Curation
 
-Curation and inclusion criteria will be published in a separate _Data in Brief_ article that is currently under review.
+Curation and inclusion criteria will be published in a separate *Data in Brief* article that is currently under review.
 
 <a id="data-description"></a>
 
@@ -53,7 +53,7 @@ The data is provided as a CSV-table containing one row for each of the 332 patie
 ## Documentation of Columns
 
 1. **`patient:`** This top-level header contains general patient information.
-    1. **`#:`** The second level header for the `patient` columns is only a placeholder.
+    1. **`core:`** The second level header for the `patient` columns is only a placeholder.
         1. **`id:`** The local study ID.
         2. **`institution:`** The institution where the patient was treated.
         3. **`sex:`** The biological sex of the patient.
@@ -68,45 +68,45 @@ The data is provided as a CSV-table containing one row for each of the 332 patie
         12. **`m_stage:`** The M category of the patient.
         13. **`extracapsular:`** Whether the patient had extracapsular spread in any LNL.
 2. **`tumor:`** This top-level header contains general tumor information.
-    1. **`1:`** This second-level header enumerates synchronous tumors.
+    1. **`core:`** This second-level header enumerates synchronous tumors.
         1. **`location:`** The location of the tumor.
         2. **`subsite:`** The subsite of the tumor, specified by ICD-O-3 code.
         3. **`side:`** Whether the tumor occurred on the right or left side of the mid-sagittal plane.
         4. **`central:`** Whether the tumor was located centrally or not.
         5. **`extension:`** Whether the tumor extended over the mid-sagittal line.
         6. **`volume:`** The volume of the tumor in cm^3.
-        7. **`stage_prefix:`** The prefix of the T category.
+        7. **`t_stage_prefix:`** The prefix of the T category.
         8. **`t_stage:`** The T category of the tumor.
 3. **`CT:`** This top-level header contains involvement information from the CT scan.
-    1. **`info:`** This second-level header contains general information about the CT scan.
+    1. **`core:`** This second-level header contains general information about the CT scan.
         1. **`date:`** The date of the CT scan. This was missing for some patients where the date of diagnosis was used as a fallback.
     2. **`left:`** This describes the observed involvement of the left LNLs.
         1. **`Va:`** As an example, this describes the clinical involvement of the left LNL Va, as observed in a CT scan.
     3. **`right:`** This describes the observed involvement of the right LNLs.
         1. **`IIa:`** While this describes the clinical involvement of the right LNL IIa, as observed in a CT scan.
 4. **`MRI:`** This top-level header contains involvement information from the MRI scan.
-    1. **`info:`** This second-level header contains general information about the MRI scan.
+    1. **`core:`** This second-level header contains general information about the MRI scan.
         1. **`date:`** The date of the MRI scan.
     2. **`left:`** This describes the observed involvement of the left LNLs.
         1. **`Ia:`** E.g., this describes the clinical involvement of the left LNL Ia, as observed in an MRI scan.
     3. **`right:`** This describes the observed involvement of the right LNLs.
         1. **`III:`** This describes the clinical involvement of the right LNL III, as observed in an MRI scan.
 5. **`PET:`** This top-level header contains involvement information from the PET scan.
-    1. **`info:`** This second-level header contains general information about the PET scan.
+    1. **`core:`** This second-level header contains general information about the PET scan.
         1. **`date:`** The date of the PET scan.
     2. **`left:`** This describes the observed involvement of the left LNLs.
         1. **`IV:`** For instance, this describes the clinical involvement of the left LNL IV, as observed in a PET scan.
     3. **`right:`** This describes the observed involvement of the right LNLs.
         1. **`III:`** On the other side, this describes the clinical involvement of the right LNL III, as observed in a PET scan.
 6. **`pathology:`** This top-level header contains involvement information from the pathology report.
-    1. **`info:`** This second-level header contains general information about the pathology report.
+    1. **`core:`** This second-level header contains general information about the pathology report.
         1. **`date:`** Date of the neck dissection.
     2. **`left:`** Microscopic involvement of the left LNLs.
         1. **`I:`** This describes whether the left LNL I was pathologically involved or not.
     3. **`right:`** Microscopic involvement of the right LNLs.
         1. **`IIb:`** This describes whether the right sub-LNL IIb was pathologically involved or not.
 7. **`total_dissected:`** This top-level header contains information about the number of lymph nodes dissected in each LNL.
-    1. **`info:`** This second-level header contains general information about the pathology report.
+    1. **`core:`** This second-level header contains general information about the pathology report.
         1. **`date:`** Date of the neck dissection.
         2. **`all_lnls:`** The total number of investigated lymph nodes.
     2. **`left:`** Number of dissected lymph nodes per LNL on the left side.
@@ -116,7 +116,7 @@ The data is provided as a CSV-table containing one row for each of the 332 patie
         1. **`II:`** Total number of dissected lymph nodes in the right LNL II.
         2. **`Ib_to_III:`** Total number of dissected lymph nodes in the right LNLs Ib-III. This information is gathered for a particular figure in our publication. Note that this is not just the sum of the dissected nodes in the LNLs Ib to III because some levels were resected en-bloc. Those are included in this column but could not be resolved for the individual LNLs.
 8. **`positive_dissected:`** This top-level header contains information about the number of pathologically positive lymph nodes in each LNL.
-    1. **`info:`** This second-level header contains general information about the findings of metastasis by the pathologist.
+    1. **`core:`** This second-level header contains general information about the findings of metastasis by the pathologist.
         1. **`date:`** Date of the neck dissection.
         2. **`all_lnls:`** The total number of involved lymph nodes.
         3. **`largest_node_mm:`** Size of the largest lymph node in the neck dissection in mm.
@@ -142,7 +142,7 @@ The data is provided as a CSV-table containing one row for each of the 332 patie
 
 Map the `raw.csv` data from the 2023-isb-multisite cohort to the `data.csv` file.
 
-This module defines how the command `lyscripts data lyproxify` (see [here](rmnldwg.github.io/lyscripts) for the documentation of the `lyscripts` module) should handle the `raw.csv` data that was extracted at the Inselspital Bern in order to transform it into a [LyProX](https://lyprox.org)-compatible `data.csv` file.
+This module defines how the command `lyscripts data lyproxify` (see [the documentation](https://lyscripts.readthedocs.io/latest) of the `lyscripts` module) should handle the `raw.csv` data that was extracted at the Inselspital Bern in order to transform it into a [LyProX](https://lyprox.org)-compatible `data.csv` file.
 
 The most important definitions in here are the list `EXCLUDE` and the dictionary `COLUMN_MAP` that defines how to construct the new columns based on the `raw.csv` data. They are described in more detail below:
 
@@ -162,7 +162,7 @@ EXCLUDE = [
 
 Essentially, a row is excluded, if for that row `check_function(raw_data[column_name])` evaluates to `True`.
 
-More information can be found in the [documentation](https://rmnldwg.github.io/lyscripts/lyscripts/data/lyproxify.html#exclude_patients) of the `lyproxify` function.
+More information can be found in the [documentation](https://lyscripts.readthedocs.io/latest/data/lyproxify.html#lyscripts.data.lyproxify.exclude_patients) of the `lyproxify` function.
 
 ---
 
@@ -170,7 +170,7 @@ More information can be found in the [documentation](https://rmnldwg.github.io/l
 
 This is the actual mapping dictionary that describes how to transform the `raw.csv` table into the `data.csv` table that can be fed into and understood by [LyProX](https://lyprox.org).
 
-See [here](https://rmnldwg.github.io/lyscripts/lyscripts/data/lyproxify.html#transform_to_lyprox) for details on how this dictionary is used by the `lyproxify` script.
+See [the docs](https://lyscripts.readthedocs.io/latest/data/lyproxify.html#lyscripts.data.lyproxify.transform_to_lyprox) for details on how this dictionary is used by the `lyproxify` script.
 
 It contains a tree-like structure that is human-readable and mimics the tree of multi-level headers in the final `data.csv` file. For every column in the final `data.csv` file, the dictionary describes from which columns in the `raw.csv` file the data should be extracted and what function should be applied to it.
 
@@ -198,6 +198,8 @@ It also contains a `__doc__` key for every sub-dictionary that describes what th
 smpl_date(entry)
 ```
 
+Parse date from `entry` and return it as a string in the format YYYY-MM-DD.
+
 ---
 
 ### <kbd>function</kbd> `smpl_diagnose`
@@ -205,6 +207,8 @@ smpl_date(entry)
 ```python
 smpl_diagnose(entry, *_args, **_kwargs)
 ```
+
+Map the diagnose entry to a boolean value.
 
 ---
 

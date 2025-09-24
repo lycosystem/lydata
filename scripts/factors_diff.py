@@ -1,27 +1,38 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#     "lyscripts @ git+https://github.com/lycosystem/lyscripts@b72d2fe74ba4ecccfdfa8b98724b4501ff1a9145",
+#     "matplotlib==3.10.0",
+#     "pandas==2.2.3",
+#     "tueplots==0.0.17",
+# ]
+# [tool.uv]
+# exclude-newer = "2025-07-30T00:00:00Z"
+# ///
+
 """Plot the difference of clinicopathological factors in two datasets as a bar plot."""
 
 import argparse
 from pathlib import Path
 
+import lydata
 import matplotlib.pyplot as plt
+from lydata import C
 from lyscripts.plots import COLORS
 from shared import MPLSTYLE
 from tueplots import figsizes, fontsizes
 
-import lydata
-from lydata import C
-
 OUTPUT_NAME = Path(__file__).with_suffix(".png").name
 
 
-def get_parser() -> argparse.ArgumentParser:
+def create_parser() -> argparse.ArgumentParser:
     """Return the argument parser."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--repo",
         type=str,
         help="The repository from which to load the datasets.",
-        default="rmnldwg/lydata",
+        default="lycosystem/lydata",
     )
     parser.add_argument(
         "--commit",
@@ -64,7 +75,7 @@ def create_ax() -> plt.Axes:
 
 def main() -> None:
     """Run main routine."""
-    args = get_parser().parse_args()
+    args = create_parser().parse_args()
 
     load_kwargs = {
         "repo_name": args.repo,
@@ -75,13 +86,13 @@ def main() -> None:
         lydata.load_datasets(
             **kwargs_from_option(args.first_dataset),
             **load_kwargs,
-        )
+        ),
     )
     second_dataset = next(
         lydata.load_datasets(
             **kwargs_from_option(args.second_dataset),
             **load_kwargs,
-        )
+        ),
     )
 
     first_color = COLORS["blue"]
@@ -105,7 +116,7 @@ def main() -> None:
             ("HPV+", C("hpv") == True),
             ("Nicotine\nabuse", C("smoke") == True),
             ("Male", C("sex").isin(["male", "MALE"])),
-        ]
+        ],
     ):
         first_percent = 100 * first_dataset.ly.portion(query=query).ratio
         second_percent = 100 * second_dataset.ly.portion(query=query).ratio

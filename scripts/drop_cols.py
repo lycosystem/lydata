@@ -1,3 +1,13 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#     "pandas==2.2.3",
+#     "typer==0.15.2",
+# ]
+# [tool.uv]
+# exclude-newer = "2025-07-30T00:00:00Z"
+# ///
+
 """Drop specified columns from a CSV file and save the result to a new CSV file."""
 
 import pandas as pd
@@ -11,7 +21,8 @@ def drop_cols(
     input_csv: str = typer.Option(..., help="Path to the input CSV file."),
     output_csv: str = typer.Option(..., help="Path to the output CSV file."),
     cols: str = typer.Option(
-        ..., help="Comma-separated list of top-level cols to drop."
+        ...,
+        help="Comma-separated list of top-level cols to drop.",
     ),
 ):
     """Drop specified columns from a CSV file and save the result to a new CSV file."""

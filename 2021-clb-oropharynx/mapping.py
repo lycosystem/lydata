@@ -1,7 +1,7 @@
 """Map the `raw.csv` data from the 2021-clb-oropharynx cohort to the `data.csv` file.
 
 This module defines how the command `lyscripts data lyproxify` (see
-[here](rmnldwg.github.io/lyscripts) for the documentation of the `lyscripts` module)
+[the documentation](https://lyscripts.readthedocs.io/latest) of the `lyscripts` module)
 should handle the `raw.csv` data that was extracted at the Inselspital Bern in order
 to transform it into a [LyProX](https://lyprox.org)-compatible `data.csv` file.
 
@@ -30,7 +30,7 @@ Essentially, a row is excluded, if for that row `check_function(raw_data[column_
 evaluates to `True`.
 
 More information can be found in the
-[documentation](https://rmnldwg.github.io/lyscripts/lyscripts/data/lyproxify.html#exclude_patients)
+[documentation](https://lyscripts.readthedocs.io/latest/data/lyproxify.html#lyscripts.data.lyproxify.exclude_patients)
 of the `lyproxify` function.
 
 ---
@@ -41,7 +41,7 @@ This is the actual mapping dictionary that describes how to transform the `raw.c
 table into the `data.csv` table that can be fed into and understood by
 [LyProX](https://lyprox.org).
 
-See [here](https://rmnldwg.github.io/lyscripts/lyscripts/data/lyproxify.html#transform_to_lyprox)
+See [the docs](https://lyscripts.readthedocs.io/latest/data/lyproxify.html#lyscripts.data.lyproxify.transform_to_lyprox)
 for details on how this dictionary is used by the `lyproxify` script.
 
 It contains a tree-like structure that is human-readable and mimics the tree of
@@ -123,10 +123,10 @@ COLUMN_MAP = {
     # Patient information
     "patient": {
         "__doc__": (
-            "General information about the patient’s condition can be found under this"
+            "General information about the patient's condition can be found under this"
             " top-level header."
         ),
-        "#": {
+        "core": {
             "__doc__": (
                 "The second level under patient has no meaning and exists solely as a"
                 " filler."
@@ -175,7 +175,7 @@ COLUMN_MAP = {
                 "columns": ["tabagisme"],
             },
             "pack_years": {
-                "__doc__": "Number of pack years of smoking hitory of the patient.",
+                "__doc__": "Number of pack years of smoking history of the patient.",
                 "func": robust_int,
                 "columns": ["tabagisme_PA"],
             },
@@ -213,9 +213,9 @@ COLUMN_MAP = {
             "m_stage": {
                 "__doc__": (
                     "The M category of the patient, encoding the presence of distant"
-                    " metastases. `-1` represents `'X'`."
+                    " metastases."
                 ),
-                "func": lambda x, *a, **k: -1 if x == "x" else int(x),
+                "func": robust_int,
                 "columns": ["cM"],
             },
         },
@@ -223,7 +223,7 @@ COLUMN_MAP = {
     # Tumor information
     "tumor": {
         "__doc__": "Information about tumors is stored under this top-level header.",
-        "1": {
+        "core": {
             "__doc__": (
                 "The second level enumerates the synchronous tumors. In our database,"
                 " no patient has had a second tumor but this structure of the file"
@@ -256,7 +256,7 @@ COLUMN_MAP = {
                 "columns": ["latéralité"],
             },
             "volume": {"__doc__": "The volume of the tumor in cm^3.", "default": None},
-            "stage_prefix": {
+            "t_stage_prefix": {
                 "__doc__": (
                     "Prefix modifier of the T-category. Can be `“c”` or `“p”`. In this"
                     " dataset, only the clinically assessed T-category is available."
@@ -276,7 +276,7 @@ COLUMN_MAP = {
             " node involvement. It was assessed based on different diagnostic"
             " modalities like CT or MRI."
         ),
-        "info": {
+        "core": {
             "__doc__": (
                 "The second level header contains general information on the diagnostic"
                 " consensus."
@@ -367,7 +367,7 @@ COLUMN_MAP = {
             "Columns under this header contain pathologically assessed involvement"
             " information for each LNL."
         ),
-        "info": {
+        "core": {
             "__doc__": (
                 "The second level header contains general information on the pathology."
             ),
@@ -418,7 +418,7 @@ COLUMN_MAP = {
     # how many LNLs were dissected
     "total_dissected": {
         "__doc__": "The total number of lymph nodes resected per LNL.",
-        "info": {
+        "core": {
             "__doc__": (
                 "The second level header contains general information on the pathology."
             ),
@@ -478,7 +478,7 @@ COLUMN_MAP = {
     # how many of the dissected LNLs were positive
     "positive_dissected": {
         "__doc__": "The number of metastatic lymph nodes found in the dissected LNLs.",
-        "info": {
+        "core": {
             "__doc__": (
                 "The second level header contains general information on the pathology."
             ),

@@ -1,3 +1,16 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#     "lyscripts @ git+https://github.com/lycosystem/lyscripts@b72d2fe74ba4ecccfdfa8b98724b4501ff1a9145",
+#     "matplotlib==3.10.0",
+#     "numpy==2.2.6",
+#     "pandas==2.2.3",
+#     "tueplots==0.0.17",
+# ]
+# [tool.uv]
+# exclude-newer = "2025-07-30T00:00:00Z"
+# ///
+
 """Horizontal stacked bar plot of involvement prevalence for different scenarios."""
 
 import argparse
@@ -14,8 +27,8 @@ from tueplots import figsizes, fontsizes
 def get_idx(df: pd.DataFrame, location: str) -> pd.Series:
     """Get the index for a given ``location`` of the primary tumor."""
     return (
-        df["tumor", "1", "subsite"].apply(
-            lambda subsite: INVERTED_FLAT_SUBSITE_DICT[subsite][0]
+        df["tumor", "core", "subsite"].apply(
+            lambda subsite: INVERTED_FLAT_SUBSITE_DICT[subsite][0],
         )
         == location
     )
@@ -26,7 +39,8 @@ NROWS, NCOLS = 2, 1
 COLORS = [COLORS["green"], COLORS["blue"], COLORS["orange"], COLORS["red"]]
 
 
-if __name__ == "__main__":
+def create_parser() -> argparse.ArgumentParser:
+    """Create an argument parser for the script."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--data",
@@ -40,6 +54,12 @@ if __name__ == "__main__":
         default=Path(__file__).parent / ".mplstyle",
         help="Path to the matplotlib style file.",
     )
+    return parser
+
+
+def main() -> None:
+    """Run main function to execute the script."""
+    parser = create_parser()
     args = parser.parse_args()
 
     plt.style.use(args.mplstyle)
@@ -48,7 +68,7 @@ if __name__ == "__main__":
             nrows=NROWS,
             ncols=NCOLS,
             height_to_width_ratio=0.2,
-        )
+        ),
     )
     plt.rcParams.update(fontsizes.icml2022())
     fig, ax = plt.subplots(
@@ -60,13 +80,13 @@ if __name__ == "__main__":
 
     data = pd.read_csv(args.data, header=[0, 1, 2])
     ipsi_involvement = data["max_llh", "ipsi"]
-    icd_codes = data["tumor", "1", "subsite"]
+    icd_codes = data["tumor", "core", "subsite"]
 
-    has_II_involved = ipsi_involvement["II"] == True  # noqa: E712, N816
-    has_III_involved = ipsi_involvement["III"] == True  # noqa: E712, N816
+    has_II_involved = ipsi_involvement["II"] == True  # noqa: E712, N816, N806
+    has_III_involved = ipsi_involvement["III"] == True  # noqa: E712, N816, N806
 
     def is_t_stage(t):  # noqa: D103
-        return data["tumor", "1", "t_stage"] == t
+        return data["tumor", "core", "t_stage"] == t
 
     def is_location(loc):  # noqa: D103
         return get_idx(data, loc)
@@ -82,7 +102,7 @@ if __name__ == "__main__":
             (is_location(loc) & ~is_t_stage(0)).sum(),
             (is_location(loc) & ~is_t_stage(0) & has_II_involved).sum(),
             (is_location(loc) & ~is_t_stage(0) & ~has_II_involved).sum(),
-        ]
+        ],
     )
     for t in [1, 2, 3, 4]:
         starts += nums
@@ -101,7 +121,7 @@ if __name__ == "__main__":
                     & ~has_II_involved
                     & has_III_involved
                 ).sum(),
-            ]
+            ],
         )
         ax[0].barh(
             y=[2, 1, 0],
@@ -134,7 +154,7 @@ if __name__ == "__main__":
             (is_location(loc) & ~is_t_stage(0) & ~has_II_involved).sum(),
             (is_location(loc) & ~is_t_stage(0) & is_gums_and_cheek).sum(),
             (is_location(loc) & ~is_t_stage(0) & is_tongue).sum(),
-        ]
+        ],
     )
     for t in [1, 2, 3, 4]:
         starts += nums
@@ -160,7 +180,7 @@ if __name__ == "__main__":
                     & has_III_involved
                 ).sum(),
                 (is_location(loc) & is_t_stage(t) & is_tongue & has_III_involved).sum(),
-            ]
+            ],
         )
         ax[1].barh(
             y=[4, 3, 2, 1, 0],
@@ -194,3 +214,7 @@ if __name__ == "__main__":
     ax[1].set_xlim(0, 40)
 
     plt.savefig(OUTPUT_PATH, dpi=300)
+
+
+if __name__ == "__main__":
+    main()

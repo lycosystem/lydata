@@ -1,0 +1,4 @@
+pandas >= 2.0.0
+python-dateutil >= 2.0.0
+icd10-cm == 0.0.5
+lyscripts @ git+https://github.com/lycosystem/lyscripts@74551fed623356bc26f59e5cad9a532e5756da2e

@@ -2,30 +2,78 @@ stages:
   lyproxify:
     foreach:
       - folder: 2021-clb-oropharynx
-        args: "--num-header-rows=1"
+        args: "--num-header-rows 1"
       - folder: 2023-clb-multisite
-        args: "--num-header-rows=3 --drop-rows=439"
+        args: "--num-header-rows 3 --drop-rows 439"
       - folder: 2023-isb-multisite
-        args: "--num-header-rows=1"
+        args: "--num-header-rows 1"
     do:
       desc:
         Parse the `raw.csv` data using the `lyscripts` Python package and the
         `mapping.py` module to bring the original data into a format that the online
         interface LyProX understands.
       cmd: >
+        uvx --with-requirements ${item.folder}/requirements.in
         lyscripts data lyproxify
-        --input-file=${item.folder}/raw.csv
-        --output-file=${item.folder}/data.csv
-        --mapping-file=${item.folder}/mapping.py
+        --input-file ${item.folder}/raw.csv
+        --output-file ${item.folder}/_lyproxified.csv
+        --mapping-file ${item.folder}/mapping.py
         ${item.args}
       deps:
         - ${item.folder}/raw.csv
         - ${item.folder}/mapping.py
       outs:
-        - ${item.folder}/data.csv:
+        - ${item.folder}/_lyproxified.csv:
             cache: false
 
-  format-dates-insert-institution-and-remove-spaces:
+  fix-2023-clb-location:
+    cmd: >
+      uv run scripts/fix_location.py
+      2023-clb-multisite/_lyproxified.csv
+      2023-clb-multisite/_fixed_location.csv
+    deps:
+      - scripts/fix_location.py
+      - 2023-clb-multisite/_lyproxified.csv
+    outs:
+      - 2023-clb-multisite/_fixed_location.csv
+
+  fix-2025-usz-add-institution:
+    desc:
+      In the 2025-USZ-Hypopharynx-Larynx dataset are patients where the tumor side
+      was reported as "ambiguous". This stage replaces that with "central".
+      And the auto-parsed 2025-USZ-Hypopharynx-Larynx dataset has
+      no id and no institution info. With some basic `sed` and `nl` commands,
+      all this can be fixed.
+    cmd:
+      sed 's/ambiguous,,/central,True,/g' 2025-usz-hypopharynx-larynx/parsed.csv |
+        sed 's/^,/University Hospital Zurich,/' |
+        sed 's/^patient,/patient,patient,/' |
+        sed 's/^core,/core,core,/' |
+        sed 's/^id,/id,institution,/' |
+        sed '4,$s/^/,/g' > 2025-usz-hypopharynx-larynx/_with_institution.csv
+    deps:
+      - 2025-usz-hypopharynx-larynx/parsed.csv
+    outs:
+      - 2025-usz-hypopharynx-larynx/_with_institution.csv:
+          cache: false
+
+  fix-2025-usz-involvement-info:
+    desc:
+      Some patients in the 2025-USZ-Hypopharynx-Larynx dataset have no involvement info
+      at all, but are N0. For those, this stage will add a `diagnostic_consensus` that
+      is all negative. It also fixes some missing pCT dates.
+    cmd: >
+      uv run scripts/fix_diagnoses.py
+      2025-usz-hypopharynx-larynx/_with_institution.csv
+      2025-usz-hypopharynx-larynx/_fixed_involvement.csv
+      --delta-days 30
+    deps:
+      - 2025-usz-hypopharynx-larynx/_with_institution.csv
+    outs:
+      - 2025-usz-hypopharynx-larynx/_fixed_involvement.csv:
+          cache: false
+
+  fix-2025-hvh-formatting:
     desc: |
       In the Vall d'Hebron dataset, dates are formatted as `dd/mm/YYYY`, which I will
       change to `YYYY-mm-dd`.
@@ -51,85 +99,28 @@ stages:
       sed 's/"C05,1"/C05.1/g' |
       sed 's/\(FEMALE\)/\L&/g' |
       sed 's/\(MALE\)/\L&/g' |
-      sed 's/\(OROPHARYNX\)/\L&/g' > 2025-hvh-oropharynx/tmp.csv
+      sed 's/\(OROPHARYNX\)/\L&/g' |
+      sed -E '2s/(#|1|info)/core/g' > 2025-hvh-oropharynx/_fixed.csv
     deps:
       - 2025-hvh-oropharynx/raw.csv
       - scripts/drop_cols.py
     outs:
-      - 2025-hvh-oropharynx/tmp.csv:
-          cache: false
+      - 2025-hvh-oropharynx/_fixed.csv
 
-  drop-cols:
+  drop-2025-hvh-cols:
     desc: |
       Drop some columns that are still present in the raw CSV, but are actually empty.
     cmd: >
-      python scripts/drop_cols.py
-      --input-csv 2025-hvh-oropharynx/tmp.csv
-      --output-csv 2025-hvh-oropharynx/data.csv
-      --cols="diagnostic_consensus,FNA,pCT"
+      uv run scripts/drop_cols.py
+      --input-csv 2025-hvh-oropharynx/_fixed.csv
+      --output-csv 2025-hvh-oropharynx/_reduced.csv
+      --cols "diagnostic_consensus,FNA,pCT"
     deps:
       - scripts/drop_cols.py
-      - 2025-hvh-oropharynx/tmp.csv
+      - 2025-hvh-oropharynx/_fixed.csv
     outs:
-      - 2025-hvh-oropharynx/data.csv:
+      - 2025-hvh-oropharynx/_reduced.csv:
           cache: false
-
-  clean:
-    desc: |
-      Remove temporary files.
-    matrix:
-      file: [2025-hvh-oropharynx/tmp.csv]
-    cmd: >
-      rm -f ${item.file}
-
-  join:
-    desc:
-      Join together those datasets for which we want to create the showcase plot.
-    deps:
-      - 2021-clb-oropharynx/data.csv
-      - 2023-isb-multisite/data.csv
-      - 2023-clb-multisite/data.csv
-    cmd: >
-      lyscripts data join
-      --inputs='[{"source": "2021-clb-oropharynx/data.csv"}, {"source": "2023-isb-multisite/data.csv"}, {"source": "2023-clb-multisite/data.csv"}]'
-      --output=joined.csv
-    outs:
-      - joined.csv
-
-  enhance:
-    desc:
-      This stage fixes the super- and sub-level reporting for the LNLs and also creates
-      new 'modalities' from combining existing ones, e.g. using the logical AND or
-      estimating the most likely involvement based on the observations only.
-    cmd: >
-      lyscripts data enhance
-      --configs=modalities.ly.yaml
-      --method=max_llh
-      --input.source=joined.csv
-      --output-file=enhanced.csv
-    deps:
-      - joined.csv
-    params:
-      - modalities.ly.yaml:
-          - modalities
-          - version
-    outs:
-      - enhanced.csv
-
-  scenario-showcase:
-    desc:
-      Plot some involvement prevalences in the data for different scenarios, showcasing
-      what is possible when data is reported in as much detail as we provide it.
-    deps:
-      - enhanced.csv
-      - scripts/scenario_showcase.py
-      - scripts/.mplstyle
-    cmd: >
-      python scripts/scenario_showcase.py
-      --data enhanced.csv
-      --mplstyle scripts/.mplstyle
-    outs:
-      - scenario_showcase.png
 
   description-and-docs:
     foreach:
@@ -141,21 +132,74 @@ stages:
         Generate the description of the `data.csv` columns from the `COLUMN_MAP` inside
         the `mapping.py` file, as well as the documentation of all the functions used
         in the `mapping.py` module. Insert these documentations into the
-        `README.template` and create the `README.md` from it.
+        `README.md.jinja` and create the `README.md` from it.
       deps:
         - scripts/render.py
-        - ${item}/README.template
+        - ${item}/README.md.jinja
         - ${item}/mapping.py
         - ${item}/data.csv
       outs:
         - ${item}/README.md:
             cache: false
       cmd: >
-        python scripts/render.py
+        uv run scripts/render.py
         -m ${item}/mapping.py
         -d ${item}/data.csv
-        -t ${item}/README.template
+        -t ${item}/README.md.jinja
         -o ${item}/README.md
+
+  lyproxify-2025-umcg:
+    foreach:
+      - radiotherapy
+      - surgery
+    do:
+      cmd: >
+        uvx --with-requirements 2025-umcg-hypopharynx-larynx/requirements.in
+        lyscripts data lyproxify
+        --input-file 2025-umcg-hypopharynx-larynx/raw_${item}.csv
+        --output-file 2025-umcg-hypopharynx-larynx/_${item}.csv
+        --mapping-file 2025-umcg-hypopharynx-larynx/mapping_${item}.py
+      deps:
+        - 2025-umcg-hypopharynx-larynx/raw_${item}.csv
+        - 2025-umcg-hypopharynx-larynx/mapping_${item}.py
+      outs:
+        - 2025-umcg-hypopharynx-larynx/_${item}.csv
+
+  join-2025-umcg-surgery-and-radiotherapy:
+    cmd: >
+      uvx --from "lyscripts @ git+https://github.com/lycosystem/lyscripts@74551fed623356bc26f59e5cad9a532e5756da2e"
+      lyscripts data join
+      --inputs '{"source": "2025-umcg-hypopharynx-larynx/_surgery.csv"}'
+      --inputs '{"source": "2025-umcg-hypopharynx-larynx/_radiotherapy.csv"}'
+      --output-file 2025-umcg-hypopharynx-larynx/_joined.csv
+    deps:
+      - 2025-umcg-hypopharynx-larynx/_surgery.csv
+      - 2025-umcg-hypopharynx-larynx/_radiotherapy.csv
+    outs:
+      - 2025-umcg-hypopharynx-larynx/_joined.csv:
+          cache: false
+
+  render-2025-umcg-docs:
+    desc:
+      The README.md generated from the `mapping_surgery.py` is a superset of that from
+      `mapping_radiotherapy.py`. Therefore, we will just render the former and replace
+      references to the `*_surgery.*` files.
+    cmd: >
+      uv run scripts/render.py
+      --mapping 2025-umcg-hypopharynx-larynx/mapping_surgery.py
+      --template 2025-umcg-hypopharynx-larynx/README.md.jinja
+      --data 2025-umcg-hypopharynx-larynx/data.csv
+      --output /dev/stdout
+      | sed 's/_surgery\./_*\./g'
+      > 2025-umcg-hypopharynx-larynx/README.md
+    deps:
+      - scripts/render.py
+      - 2025-umcg-hypopharynx-larynx/mapping_surgery.py
+      - 2025-umcg-hypopharynx-larynx/README.md.jinja
+      - 2025-umcg-hypopharynx-larynx/data.csv
+    outs:
+      - 2025-umcg-hypopharynx-larynx/README.md:
+          cache: false
 
   plot-t-category:
     foreach:
@@ -164,12 +208,18 @@ stages:
       - 2023-clb-multisite
       - 2023-isb-multisite
       - 2025-hvh-oropharynx
+      - 2025-usz-hypopharynx-larynx
+      - 2025-umcg-hypopharynx-larynx
+      - 2025-ukf-hypopharynx
     do:
+      cmd: >
+        uv run scripts/t_category.py ${item}/data.csv
       deps:
         - scripts/t_category.py
         - ${item}/data.csv
-      cmd: >
-        python scripts/t_category.py ${item}/data.csv
+      outs:
+        - ${item}/figures/t_category.png:
+            cache: false
 
   plot-age-and-sex:
     foreach:
@@ -178,12 +228,18 @@ stages:
       - 2023-clb-multisite
       - 2023-isb-multisite
       - 2025-hvh-oropharynx
+      - 2025-umcg-hypopharynx-larynx
+      - 2025-usz-hypopharynx-larynx
+      - 2025-ukf-hypopharynx
     do:
+      cmd: >
+        uv run scripts/age_and_sex.py ${item}/data.csv
       deps:
         - scripts/age_and_sex.py
         - ${item}/data.csv
-      cmd: >
-        python scripts/age_and_sex.py ${item}/data.csv
+      outs:
+        - ${item}/figures/age_and_sex.png:
+            cache: false
 
   plot-subsite:
     foreach:
@@ -193,11 +249,14 @@ stages:
       - 2023-isb-multisite
       - 2025-hvh-oropharynx
     do:
+      cmd: >
+        uv run scripts/subsite.py --data ${item}/data.csv
       deps:
         - scripts/subsite.py
         - ${item}/data.csv
-      cmd: >
-        python scripts/subsite.py --data ${item}/data.csv
+      outs:
+        - ${item}/figures/subsite.png:
+            cache: false
 
   bar-plot:
     foreach:
@@ -209,19 +268,148 @@ stages:
         - scripts/bar_plot.py
         - ${item}/data.csv
       cmd:
-        python scripts/bar_plot.py ${item}/data.csv
+        uv run scripts/bar_plot.py ${item}/data.csv
 
   factors-diff:
     matrix:
       first: [2021-usz-oropharynx]
       second: [2025-hvh-oropharynx]
     cmd: >
-      python scripts/factors_diff.py
+      uv run scripts/factors_diff.py
       --first-dataset ${item.first}
       --second-dataset ${item.second}
       --commit ee15c4cabdd160a10783fcf85ffe1cbfeb5c4826
-      --repo rmnldwg/lydata.private
+      --repo lycosystem/lydata.private
     deps:
       - ${item.first}/data.csv
       - ${item.second}/data.csv
       - scripts/factors_diff.py
+
+  plot-2025-ukf-conflicts:
+    cmd: >
+      uv run scripts/conflicts.py
+      --input-file 2025-ukf-hypopharynx/data.csv
+      --figure-dir 2025-ukf-hypopharynx/figures
+    deps:
+      - scripts/conflicts.py
+      - 2025-ukf-hypopharynx/data.csv
+    outs:
+      - 2025-ukf-hypopharynx/figures/conflicts.png
+      - 2025-ukf-hypopharynx/figures/total_conflicts.png
+
+  format-2025-ukf-data:
+    desc: Update UKF 2nd-lvl table headers to "core".
+    cmd: >
+      sed -E '2s/(#|1|info)/core/g' 2025-ukf-hypopharynx/raw.csv > 2025-ukf-hypopharynx/_formatted.csv
+    deps:
+      - 2025-ukf-hypopharynx/raw.csv
+    outs:
+      - 2025-ukf-hypopharynx/_formatted.csv:
+          cache: false
+
+  assign-unique-ids:
+    foreach:
+      - dir: 2021-clb-oropharynx
+        file: _lyproxified.csv
+      - dir: 2021-usz-oropharynx
+        file: no_ids.csv
+      - dir: 2023-clb-multisite
+        file: _fixed_location.csv
+      - dir: 2023-isb-multisite
+        file: _lyproxified.csv
+      - dir: 2025-hvh-oropharynx
+        file: _reduced.csv
+      - dir: 2025-ukf-hypopharynx
+        file: _formatted.csv
+      - dir: 2025-umcg-hypopharynx-larynx
+        file: _joined.csv
+      - dir: 2025-usz-hypopharynx-larynx
+        file: _fixed_involvement.csv
+    do:
+      desc:
+        For easier referencing of individual patients, we introduce unique patient IDs.
+        They consist of the year the dataset was released, the abbreviation of the
+        institution that extracted the data and the number of the patient within that
+        institution.
+      cmd: >
+        uv run scripts/assign_ids.py
+        ${item.dir}
+        --input-csv ${item.file}
+        --output-csv _to_cast.csv
+      deps:
+        - scripts/assign_ids.py
+        - ${item.dir}/${item.file}
+      outs:
+        - ${item.dir}/_to_cast.csv:
+            cache: false
+
+  cast-dtypes:
+    foreach:
+      - 2021-clb-oropharynx
+      - 2021-usz-oropharynx
+      - 2023-clb-multisite
+      - 2023-isb-multisite
+      - 2025-hvh-oropharynx
+      - 2025-ukf-hypopharynx
+      - 2025-umcg-hypopharynx-larynx
+      - 2025-usz-hypopharynx-larynx
+    do:
+      desc:
+        We use a pydantic schema in the lydata-package and a pandas utility to cast the
+        dtypes of the loaded dataframes appropriately and store the result again as CSV
+        files. The result should be cleaner (e.g. integers don't look like floats...).
+      cmd: >
+        uv run scripts/cast.py ${item}/_to_cast.csv ${item}/data.csv
+      deps:
+        - scripts/cast.py
+        - ${item}/_to_cast.csv
+      outs:
+        - ${item}/data.csv:
+            cache: false
+
+  validate:
+    foreach:
+      - 2021-clb-oropharynx
+      - 2021-usz-oropharynx
+      - 2023-clb-multisite
+      - 2023-isb-multisite
+      - 2025-hvh-oropharynx
+      - 2025-ukf-hypopharynx
+      - 2025-umcg-hypopharynx-larynx
+      - 2025-usz-hypopharynx-larynx
+    do:
+      desc:
+        We use a pydantic schema in the lydata-package and a pandas utility to cast the
+        dtypes of the loaded dataframes appropriately and store the result again as CSV
+        files. The result should be cleaner (e.g. integers don't look like floats...).
+      cmd: >
+        uv run scripts/validate.py ${item}/data.csv
+      deps:
+        - scripts/validate.py
+        - ${item}/data.csv
+      always_changed: true
+
+  area-plots:
+    foreach:
+      - dir: 2025-usz-hypopharynx-larynx
+        patch_xy: "10 30"
+        text_xy: "15 60"
+      - dir: 2025-umcg-hypopharynx-larynx
+        patch_xy: "70 60"
+        text_xy: "30 50"
+      - dir: 2025-ukf-hypopharynx
+        patch_xy: "20 40"
+        text_xy: "25 70"
+    do:
+      cmd: >
+        uv run scripts/area_plot.py
+        ${item.dir}/data.csv ${item.dir}/figures/subsite_and_t.png
+        --patch-xy ${item.patch_xy}
+        --text-xy ${item.text_xy}
+      deps:
+        - scripts/area_plot.py
+        - scripts/shared.py
+        - ${item.dir}/data.csv
+      outs:
+        - ${item.dir}/figures/subsite_and_t.png:
+            cache: false

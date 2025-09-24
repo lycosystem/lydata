@@ -24,19 +24,19 @@ The `raw.csv` data does contain patients which are duplicates of the patient rec
 
 Below we show some figures that aim to coarsely characterize the patient cohort in this directory.
 
-| ![age distribution](figures/age_and_sex.png)                               |
+| ![age distribution](figures/age_and_sex.png)                                 |
 | ---------------------------------------------------------------------------- |
-| **Figure 1:** _Distribution over age, stratified by sex and smoking status._ |
+| **Figure 1:** *Distribution over age, stratified by sex and smoking status.* |
 
-| ![T-category distribution](figures/t_category.png)                         | ![subsite distribution](figures/subsite.png)           |
-| ---------------------------------------------------------------------------- | -------------------------------------------------------- |
-| **Figure 2:** _Distribution over age, stratified by sex and smoking status._ | **Figure 3:** _Distribution over primary tumor subsite._ |
+| ![T-category distribution](figures/t_category.png) | ![subsite distribution](figures/subsite.png)             |
+| -------------------------------------------------- | -------------------------------------------------------- |
+| **Figure 2:** *Distribution over T-category.*      | **Figure 3:** *Distribution over primary tumor subsite.* |
 
 <a id="curation"></a>
 
 ## Curation
 
-Curation and inclusion criteria will be published in a separate _Data in Brief_ article that is currently under review.
+Curation and inclusion criteria will be published in a separate *Data in Brief* article that is currently under review.
 
 <a id="online-interface"></a>
 
@@ -55,45 +55,45 @@ The data is provided as a CSV-table containing one row for each of the 373 patie
 ## Documentation of Columns
 
 1. **`patient:`** This top-level header contains general patient information.
-    1. **`#:`** The second level header for the `patient` columns is only a placeholder.
-        1. **`institution:`** The institution where the patient was treated.
-        2. **`sex:`** The biological sex of the patient.
-        3. **`age:`** The age of the patient at the time of diagnosis.
-        4. **`weight:`** The weight of the patient at the time of diagnosis.
-        5. **`diagnose_date:`** The date of surgery because the raw file does not specify a date of diagnosis.
-        6. **`alcohol_abuse:`** Whether the patient was abusingly drinking alcohol at the time of diagnosis.
-        7. **`nicotine_abuse:`** Whether the patient was smoking nicotine at the time of diagnosis.
-        8. **`hpv_status:`** The HPV p16 status of the patient.
-        9. **`neck_dissection:`** Whether the patient underwent a neck dissection. In this dataset, all patients underwent a neck dissection.
-        10. **`tnm_edition:`** The edition of the TNM classification used.
-        11. **`n_stage:`** The pN category of the patient (pathologically assessed).
-        12. **`m_stage:`** The M category of the patient. `-1` refers to `'X'`.
+    1. **`core:`** The second level header for the `patient` columns is only a placeholder.
+        1. **`id:`** The patient ID.
+        2. **`institution:`** The institution where the patient was treated.
+        3. **`sex:`** The biological sex of the patient.
+        4. **`age:`** The age of the patient at the time of diagnosis.
+        5. **`weight:`** The weight of the patient at the time of diagnosis.
+        6. **`diagnose_date:`** The date of surgery because the raw file does not specify a date of diagnosis.
+        7. **`alcohol_abuse:`** Whether the patient was abusingly drinking alcohol at the time of diagnosis.
+        8. **`nicotine_abuse:`** Whether the patient was smoking nicotine at the time of diagnosis.
+        9. **`hpv_status:`** The HPV p16 status of the patient.
+        10. **`neck_dissection:`** Whether the patient underwent a neck dissection. In this dataset, all patients underwent a neck dissection.
+        11. **`tnm_edition:`** The edition of the TNM classification used.
+        12. **`n_stage:`** The pN category of the patient (pathologically assessed).
         13. **`extracapsular:`** Whether the patient had extracapsular spread. In this dataset, this information is only globally available, not for each individual lymph node level.
 2. **`tumor:`** This top-level header contains general tumor information.
-    1. **`1:`** The second level header enumerates synchronous tumors.
-        1. **`location:`** The location of the tumor. This is empty for all patients because we can later infer it from the subsite's ICD-O-3 code.
+    1. **`core:`** The second level header enumerates synchronous tumors.
+        1. **`location:`** The location of the prmary tumor, inferred from the ICD.
         2. **`subsite:`** The subsite of the tumor, specified by ICD-O-3 code.
         3. **`central:`** Whether the tumor is located centrally w.r.t. the mid-sagittal plane.
         4. **`extension:`** Whether the tumor extended over the mid-sagittal line.
         5. **`volume:`** The volume of the tumor in cm^3.
-        6. **`stage_prefix:`** The prefix of the T category.
+        6. **`t_stage_prefix:`** The prefix of the T category.
         7. **`t_stage:`** The T category of the tumor.
 3. **`pathology:`** This top-level header contains information from the pathology that received the LNLs resected during the neck dissection.
-    1. **`info:`** This second-level header contains general information.
+    1. **`core:`** This second-level header contains general information.
         1. **`date:`** The date of the pathology report (same as surgery).
     2. **`ipsi:`** This reports the involvement of the ipsilateral LNLs.
         1. **`III:`** For example, this column reports the involvement of the ipsilateral LNL III.
     3. **`contra:`** This reports the involvement of the contralateral LNLs.
         1. **`V:`** This column reports the pathologic involvement of the contralateral LNL V.
 4. **`diagnostic_consensus:`** This top-level header contains information about the diagnostic consensus, which we assumed to be negative for each LNL that was not resected during the neck dissection. However, we do not know if it was positive for resected patients. This means, all columns under this top-level header are essentially inferred from looking at missing entries under the pathology columns.
-    1. **`info:`** This second-level header contains general information.
+    1. **`core:`** This second-level header contains general information.
         1. **`date:`** The date of the diagnostic consensus (same as surgery).
     2. **`ipsi:`** This reports the diagnostic consensus of the ipsilateral LNLs.
         1. **`Ib:`** E.g., this column reports the diagnostic consensus of the ipsilateral LNL Ib.
     3. **`contra:`** This reports the diagnostic consensus of the contralateral LNLs.
         1. **`III:`** Under this column, we report the diagnostic consensus of the contralateral LNL III.
 5. **`total_dissected:`** This top-level header contains information about the total number of dissected and pathologically investigated lymph nodes per LNL.
-    1. **`info:`** This second-level header contains general information.
+    1. **`core:`** This second-level header contains general information.
         1. **`date:`** The date of the neck dissection.
     2. **`ipsi:`** This reports the total number of dissected lymph nodes per ipsilateral LNL.
         1. **`II:`** For instance, this column reports the total number of dissected lymph nodes in ipsilateral LNL II.
@@ -102,7 +102,7 @@ The data is provided as a CSV-table containing one row for each of the 373 patie
         1. **`VII:`** While this column reports the total number of dissected lymph nodes in contralateral LNL VII.
         2. **`Ib_to_III:`** This column reports the total number of dissected lymph nodes in contralateral LNL Ib to III. This column exists for convenience because we created a figure based on this.
 6. **`positive_dissected:`** This top-level header contains information about the number of dissected lymph nodes per LNL that were pathologically found to be positive.
-    1. **`info:`** This second-level header contains general information.
+    1. **`core:`** This second-level header contains general information.
         1. **`date:`** The date of the neck dissection.
     2. **`ipsi:`** This reports the number of dissected lymph nodes per ipsilateral LNL that were pathologically found to be positive.
         1. **`IV:`** Here, we report the number of metastatic lymph nodes in ipsilateral LNL IV.
@@ -119,7 +119,7 @@ The data is provided as a CSV-table containing one row for each of the 373 patie
 
 Map the `raw.csv` data from the 2023-clb-multisite cohort to the `data.csv` file.
 
-This module defines how the command `lyscripts data lyproxify` (see [here](rmnldwg.github.io/lyscripts) for the documentation of the `lyscripts` module) should handle the `raw.csv` data that was extracted at the Centre Léon Bérard in order to transform it into a [LyProX](https://lyprox.org)-compatible `data.csv` file.
+This module defines how the command `lyscripts data lyproxify` (see [the documentation](https://lyscripts.readthedocs.io/latest) of the `lyscripts` module) should handle the `raw.csv` data that was extracted at the Centre Léon Bérard in order to transform it into a [LyProX](https://lyprox.org)-compatible `data.csv` file.
 
 The most important definitions in here are the list `EXCLUDE` and the dictionary `COLUMN_MAP` that defines how to construct the new columns based on the `raw.csv` data. They are described in more detail below:
 
@@ -139,7 +139,7 @@ EXCLUDE = [
 
 Essentially, a row is excluded, if for that row `check_function(raw_data[column_name])` evaluates to `True`.
 
-More information can be found in the [documentation](https://rmnldwg.github.io/lyscripts/lyscripts/data/lyproxify.html#exclude_patients) of the `lyproxify` function.
+More information can be found in the [documentation](https://lyscripts.readthedocs.io/latest/data/lyproxify.html#lyscripts.data.lyproxify.exclude_patients) of the `lyproxify` function.
 
 ---
 
@@ -147,7 +147,7 @@ More information can be found in the [documentation](https://rmnldwg.github.io/l
 
 This is the actual mapping dictionary that describes how to transform the `raw.csv` table into the `data.csv` table that can be fed into and understood by [LyProX](https://lyprox.org).
 
-See [here](https://rmnldwg.github.io/lyscripts/lyscripts/data/lyproxify.html#transform_to_lyprox) for details on how this dictionary is used by the `lyproxify` script.
+See [the docs](https://lyscripts.readthedocs.io/latest/data/lyproxify.html#lyscripts.data.lyproxify.transform_to_lyprox) for details on how this dictionary is used by the `lyproxify` script.
 
 It contains a tree-like structure that is human-readable and mimics the tree of multi-level headers in the final `data.csv` file. For every column in the final `data.csv` file, the dictionary describes from which columns in the `raw.csv` file the data should be extracted and what function should be applied to it.
 
@@ -330,3 +330,13 @@ sum_columns(*columns, **_kwargs) → int
 ```
 
 Sum the values of multiple columns.
+
+---
+
+### <kbd>function</kbd> `create_id_counter`
+
+```python
+create_id_counter(start: int, prefix: str) → collections.abc.Callable[[], str]
+```
+
+Create a counter to generates IDs `start` with the given `prefix`.

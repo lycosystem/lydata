@@ -1,7 +1,7 @@
 """Map the `raw.csv` data from the 2023-isb-multisite cohort to the `data.csv` file.
 
 This module defines how the command `lyscripts data lyproxify` (see
-[here](rmnldwg.github.io/lyscripts) for the documentation of the `lyscripts` module)
+[the documentation](https://lyscripts.readthedocs.io/latest) of the `lyscripts` module)
 should handle the `raw.csv` data that was extracted at the Inselspital Bern in order
 to transform it into a [LyProX](https://lyprox.org)-compatible `data.csv` file.
 
@@ -30,7 +30,7 @@ Essentially, a row is excluded, if for that row `check_function(raw_data[column_
 evaluates to `True`.
 
 More information can be found in the
-[documentation](https://rmnldwg.github.io/lyscripts/lyscripts/data/lyproxify.html#exclude_patients)
+[documentation](https://lyscripts.readthedocs.io/latest/data/lyproxify.html#lyscripts.data.lyproxify.exclude_patients)
 of the `lyproxify` function.
 
 ---
@@ -41,7 +41,7 @@ This is the actual mapping dictionary that describes how to transform the `raw.c
 table into the `data.csv` table that can be fed into and understood by
 [LyProX](https://lyprox.org).
 
-See [here](https://rmnldwg.github.io/lyscripts/lyscripts/data/lyproxify.html#transform_to_lyprox)
+See [the docs](https://lyscripts.readthedocs.io/latest/data/lyproxify.html#lyscripts.data.lyproxify.transform_to_lyprox)
 for details on how this dictionary is used by the `lyproxify` script.
 
 It contains a tree-like structure that is human-readable and mimics the tree of
@@ -55,6 +55,7 @@ respective column is about. This is used to generate the documentation for the
 
 ---
 """
+
 import re
 from collections.abc import Callable
 from typing import Any
@@ -106,15 +107,27 @@ ALL_FALSE = [False] * 8
 SUBLVL_PATTERN = {
     "left": {
         #              right side  Ia    Ib    IIa    IIb    III    IV     Va     Vb
-        "I": np.array([*ALL_FALSE, True, True, False, False, False, False, False, False]),
-        "II": np.array([*ALL_FALSE, False, False, True, True, False, False, False, False]),
-        "V": np.array([*ALL_FALSE, False, False, False, False, False, False, True, True]),
+        "I": np.array(
+            [*ALL_FALSE, True, True, False, False, False, False, False, False],
+        ),
+        "II": np.array(
+            [*ALL_FALSE, False, False, True, True, False, False, False, False],
+        ),
+        "V": np.array(
+            [*ALL_FALSE, False, False, False, False, False, False, True, True],
+        ),
     },
     "right": {
         #              Ia    Ib    IIa    IIb    III    IV     Va     Vb     left side
-        "I": np.array([True, True, False, False, False, False, False, False, *ALL_FALSE]),
-        "II": np.array([False, False, True, True, False, False, False, False, *ALL_FALSE]),
-        "V": np.array([False, False, False, False, False, False, True, True, *ALL_FALSE]),
+        "I": np.array(
+            [True, True, False, False, False, False, False, False, *ALL_FALSE],
+        ),
+        "II": np.array(
+            [False, False, True, True, False, False, False, False, *ALL_FALSE],
+        ),
+        "V": np.array(
+            [False, False, False, False, False, False, True, True, *ALL_FALSE],
+        ),
     },
 }
 IB_TO_III_PATTERN = {
@@ -126,11 +139,13 @@ IB_TO_III_PATTERN = {
 
 
 def smpl_date(entry):
+    """Parse date from `entry` and return it as a string in the format YYYY-MM-DD."""
     parsed_dt = parse(entry)
     return parsed_dt.strftime("%Y-%m-%d")
 
 
 def smpl_diagnose(entry, *_args, **_kwargs):
+    """Map the diagnose entry to a boolean value."""
     return {
         0: False,
         1: True,
@@ -140,10 +155,11 @@ def smpl_diagnose(entry, *_args, **_kwargs):
 
 def robust(func: Callable) -> Any | None:
     """Make casting function 'robust' by returning `None` when an error is thrown."""
+
     def wrapper(entry, *_args, **_kwargs):
         try:
             return func(entry)
-        except:
+        except:  # noqa: E722
             return None
 
     return wrapper
@@ -365,8 +381,10 @@ def get_index(side: str, lnl: str) -> int:
         if side in entry and lnl in entry:
             return i
 
+    raise RuntimeError(f"Couldn't find index for {side} {lnl} in pathology columns.")
 
-def num_Ib_to_III_from_pathology(*lnl_entries, side="left") -> int | None:
+
+def num_Ib_to_III_from_pathology(*lnl_entries, side="left") -> int | None:  # noqa: N802
     """Infer number of involved lymph nodes in LNL Ib to III from pathology."""
     # an array of dicts with the numbers of investigated/involved nodes per LNL
     lnl_results = [from_pathology(e)[0] for e in lnl_entries]
@@ -397,7 +415,7 @@ def num_Ib_to_III_from_pathology(*lnl_entries, side="left") -> int | None:
 
     for symbol in symbols:
         symbol_pattern = np.array([_.get(symbol, 0) > 0 for _ in lnl_results])
-        is_resected_within_Ib_to_III = all(symbol_pattern <= IB_TO_III_PATTERN[side])
+        is_resected_within_Ib_to_III = all(symbol_pattern <= IB_TO_III_PATTERN[side])  # noqa: N806
         if is_resected_within_Ib_to_III:
             res += total_by_symbol[symbol]
             # if symbol == "a" and total_by_symbol["a"] == 8:
@@ -472,7 +490,7 @@ COLUMN_MAP = {
     # Patient information
     "patient": {
         "__doc__": "This top-level header contains general patient information.",
-        "#": {
+        "core": {
             "__doc__": (
                 "The second level header for the `patient` columns is only a "
                 "placeholder."
@@ -555,7 +573,7 @@ COLUMN_MAP = {
     # Tumor information
     "tumor": {
         "__doc__": "This top-level header contains general tumor information.",
-        "1": {
+        "core": {
             "__doc__": "This second-level header enumerates synchronous tumors.",
             "location": {
                 "__doc__": "The location of the tumor.",
@@ -586,7 +604,7 @@ COLUMN_MAP = {
                 "columns": ["Extension over the mid-sagital plane"],
             },
             "volume": {"__doc__": "The volume of the tumor in cm^3.", "default": None},
-            "stage_prefix": {
+            "t_stage_prefix": {
                 "__doc__": "The prefix of the T category.",
                 "func": map_t_stage_prefix,
                 "columns": ["pT"],
@@ -604,7 +622,7 @@ COLUMN_MAP = {
         "__doc__": (
             "This top-level header contains involvement information from the CT scan."
         ),
-        "info": {
+        "core": {
             "__doc__": (
                 "This second-level header contains general information about the CT"
                 " scan."
@@ -651,8 +669,8 @@ COLUMN_MAP = {
             "II": {"default": None},
             "IIa": {
                 "__doc__": (
-                    "While this describes the clinical involvement of the right LNL IIa,"
-                    " as observed in a CT scan."
+                    "While this describes the clinical involvement of the "
+                    "right LNL IIa, as observed in a CT scan."
                 ),
                 "func": map_ct,
                 "columns": ["right Level IIa", MRI_OR_CT_COL],
@@ -671,7 +689,7 @@ COLUMN_MAP = {
         "__doc__": (
             "This top-level header contains involvement information from the MRI scan."
         ),
-        "info": {
+        "core": {
             "__doc__": (
                 "This second-level header contains general information about the MRI"
                 " scan."
@@ -729,7 +747,7 @@ COLUMN_MAP = {
         "__doc__": (
             "This top-level header contains involvement information from the PET scan."
         ),
-        "info": {
+        "core": {
             "__doc__": (
                 "This second-level header contains general information about the PET"
                 " scan."
@@ -789,7 +807,7 @@ COLUMN_MAP = {
             "This top-level header contains involvement information from the pathology"
             " report."
         ),
-        "info": {
+        "core": {
             "__doc__": (
                 "This second-level header contains general information about the"
                 " pathology report."
@@ -915,7 +933,7 @@ COLUMN_MAP = {
             "This top-level header contains information about the number of lymph nodes"
             " dissected in each LNL."
         ),
-        "info": {
+        "core": {
             "__doc__": (
                 "This second-level header contains general information about the"
                 " pathology report."
@@ -993,7 +1011,7 @@ COLUMN_MAP = {
                 "func": num_Ib_to_III_from_pathology,
                 "columns": PATHOLOGY_COLS_INVESTIGATED,
                 "kwargs": {"side": "left"},
-            }
+            },
         },
         "right": {
             "__doc__": "Number of dissected lymph nodes per LNL on the right side.",
@@ -1057,7 +1075,7 @@ COLUMN_MAP = {
                 "func": num_Ib_to_III_from_pathology,
                 "columns": PATHOLOGY_COLS_INVESTIGATED,
                 "kwargs": {"side": "right"},
-            }
+            },
         },
     },
     # Number of positive nodes
@@ -1066,7 +1084,7 @@ COLUMN_MAP = {
             "This top-level header contains information about the number of"
             " pathologically positive lymph nodes in each LNL."
         ),
-        "info": {
+        "core": {
             "__doc__": (
                 "This second-level header contains general information about the"
                 " findings of metastasis by the pathologist."
@@ -1141,7 +1159,7 @@ COLUMN_MAP = {
                 "func": num_Ib_to_III_from_pathology,
                 "columns": PATHOLOGY_COLS_POSITIVE,
                 "kwargs": {"side": "left"},
-            }
+            },
         },
         "right": {
             "__doc__": (
@@ -1196,7 +1214,7 @@ COLUMN_MAP = {
                 "func": num_Ib_to_III_from_pathology,
                 "columns": PATHOLOGY_COLS_POSITIVE,
                 "kwargs": {"side": "right"},
-            }
+            },
         },
     },
     "enbloc_dissected": {
@@ -1362,5 +1380,5 @@ COLUMN_MAP = {
                 "columns": ["right Level Vb #positiv"],
             },
         },
-    }
+    },
 }

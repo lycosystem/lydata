@@ -139,5 +139,5 @@ dmypy.json
 /joined.csv
 /enhanced.csv
 
-# SCM
-**/_version.py
+# ignore temporary files
+**/_*.csv

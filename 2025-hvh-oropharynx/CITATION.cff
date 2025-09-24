@@ -11,6 +11,10 @@ authors:
   - given-names: Sergi
     family-names: Benavente
     affiliation: Hospital Vall d'Hebron
-repository-code: 'https://github.com/rmnldwg/lyDATA/tree/main/2025-hvh-oropharynx'
+repository-code: 'https://github.com/lycosystem/lydata/tree/main/2025-hvh-oropharynx'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.14976454
+    description: "Zenodo indexed version of dataset"
 license: CC BY-SA 4.0
 date-released: '2025-03-05'

@@ -1,0 +1,3 @@
+pandas >= 2.0.0
+dateparser >= 1.0.0
+lyscripts @ git+https://github.com/lycosystem/lyscripts@74551fed623356bc26f59e5cad9a532e5756da2e

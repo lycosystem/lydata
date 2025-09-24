@@ -20,7 +20,7 @@ authors:
     family-names: Grégoire
     email: vincent.gregoire@lyon.unicancer.fr
     affiliation: Centre Léon Bérard
-repository-code: 'https://github.com/rmnldwg/lyDATA/tree/main/2023-clb-multisite'
+repository-code: 'https://github.com/lycosystem/lydata/tree/main/2023-clb-multisite'
 identifiers:
   - type: doi
     value: 10.5281/zenodo.10210361
