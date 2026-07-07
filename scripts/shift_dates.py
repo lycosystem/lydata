@@ -58,10 +58,6 @@ def main(
 
 
 if __name__ == "__main__":
-    # main(
-    #     input_path=Path("2025-usz-hypopharynx-larynx/parsed.csv"),
-    #     output_path=Path("shifted.csv"),
-    # )
     import typer
 
     typer.run(main)

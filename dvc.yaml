@@ -7,6 +7,8 @@ stages:
         args: "--num-header-rows 3 --drop-rows 439"
       - folder: 2023-isb-multisite
         args: "--num-header-rows 1"
+      - folder: 2025-ksa-oral-cavity
+        args: "--num-header-rows 1"
     do:
       desc:
         Parse the `raw.csv` data using the `lyscripts` Python package and the
@@ -127,6 +129,7 @@ stages:
       - 2021-clb-oropharynx
       - 2023-clb-multisite
       - 2023-isb-multisite
+      - 2025-ksa-oral-cavity
     do:
       desc:
         Generate the description of the `data.csv` columns from the `COLUMN_MAP` inside
@@ -208,6 +211,7 @@ stages:
       - 2023-clb-multisite
       - 2023-isb-multisite
       - 2025-hvh-oropharynx
+      - 2025-ksa-oral-cavity
       - 2025-usz-hypopharynx-larynx
       - 2025-umcg-hypopharynx-larynx
       - 2025-ukf-hypopharynx
@@ -231,6 +235,7 @@ stages:
       - 2025-umcg-hypopharynx-larynx
       - 2025-usz-hypopharynx-larynx
       - 2025-ukf-hypopharynx
+      - 2025-ksa-oral-cavity
     do:
       cmd: >
         uv run scripts/age_and_sex.py ${item}/data.csv
@@ -248,6 +253,7 @@ stages:
       - 2023-clb-multisite
       - 2023-isb-multisite
       - 2025-hvh-oropharynx
+      - 2025-ksa-oral-cavity
     do:
       cmd: >
         uv run scripts/subsite.py --data ${item}/data.csv
@@ -325,6 +331,8 @@ stages:
         file: _joined.csv
       - dir: 2025-usz-hypopharynx-larynx
         file: _fixed_involvement.csv
+      - dir: 2025-ksa-oral-cavity
+        file: _lyproxified.csv
     do:
       desc:
         For easier referencing of individual patients, we introduce unique patient IDs.
@@ -353,6 +361,7 @@ stages:
       - 2025-ukf-hypopharynx
       - 2025-umcg-hypopharynx-larynx
       - 2025-usz-hypopharynx-larynx
+      - 2025-ksa-oral-cavity
     do:
       desc:
         We use a pydantic schema in the lydata-package and a pandas utility to cast the
@@ -377,6 +386,7 @@ stages:
       - 2025-ukf-hypopharynx
       - 2025-umcg-hypopharynx-larynx
       - 2025-usz-hypopharynx-larynx
+      - 2025-ksa-oral-cavity
     do:
       desc:
         We use a pydantic schema in the lydata-package and a pandas utility to cast the

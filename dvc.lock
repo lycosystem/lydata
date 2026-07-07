@@ -70,8 +70,8 @@ stages:
       size: 80516
     - path: scripts/drop_cols.py
       hash: md5
-      md5: dc4bbeffb5e69044ae1d46851920cc02
-      size: 1033
+      md5: d1a0ca51fafc08e4acd4e3582a030fe2
+      size: 853
     outs:
     - path: 2025-hvh-oropharynx/_tmp.csv
       hash: md5
@@ -158,16 +158,16 @@ stages:
     outs:
     - path: scenario_showcase.png
       hash: md5
-      md5: beafd10310cd876bb4077b447f75e01d
-      size: 86382
+      md5: c83a6a614ebe248629ef083da1fa75dd
+      size: 74369
   description-and-docs@2021-clb-oropharynx:
     cmd: "uv run scripts/render.py -m 2021-clb-oropharynx/mapping.py -d 2021-clb-oropharynx/data.csv
       -t 2021-clb-oropharynx/README.md.jinja -o 2021-clb-oropharynx/README.md\n"
     deps:
     - path: 2021-clb-oropharynx/README.md.jinja
       hash: md5
-      md5: 167d94b07dce5980b1a897f5fb35947a
-      size: 16665
+      md5: 3490fdbae85934b17dbf2c45a9425aff
+      size: 16690
     - path: 2021-clb-oropharynx/data.csv
       hash: md5
       md5: b39df5b5dbe9b99f3b7f7062530f3cda
@@ -183,16 +183,16 @@ stages:
     outs:
     - path: 2021-clb-oropharynx/README.md
       hash: md5
-      md5: 8a9f14c953113b33258a3cb67f03165b
-      size: 25514
+      md5: 643882f6de6f0fd7cff24ca6d6fcf46a
+      size: 25539
   description-and-docs@2023-clb-multisite:
     cmd: "uv run scripts/render.py -m 2023-clb-multisite/mapping.py -d 2023-clb-multisite/data.csv
       -t 2023-clb-multisite/README.md.jinja -o 2023-clb-multisite/README.md\n"
     deps:
     - path: 2023-clb-multisite/README.md.jinja
       hash: md5
-      md5: c629b38333cf08dd8999f0765fabc463
-      size: 3233
+      md5: 6fb595deb8ef2a2c6e124e95e703d76e
+      size: 3258
     - path: 2023-clb-multisite/data.csv
       hash: md5
       md5: c7122e540ab30ab014761100b173623e
@@ -208,16 +208,16 @@ stages:
     outs:
     - path: 2023-clb-multisite/README.md
       hash: md5
-      md5: d063e9578eb9105780d30dcb6301c502
-      size: 14593
+      md5: b7c98f691594ded6d4e5fd2e026023f4
+      size: 14615
   description-and-docs@2023-isb-multisite:
     cmd: "uv run scripts/render.py -m 2023-isb-multisite/mapping.py -d 2023-isb-multisite/data.csv
       -t 2023-isb-multisite/README.md.jinja -o 2023-isb-multisite/README.md\n"
     deps:
     - path: 2023-isb-multisite/README.md.jinja
       hash: md5
-      md5: 1f2d32a815921e9ba97825b661d992ad
-      size: 3002
+      md5: 19807b248f4a9bf44bf17cf2ccfc49bc
+      size: 3027
     - path: 2023-isb-multisite/data.csv
       hash: md5
       md5: 079ded521440c0cf66f16fe77dc00ef6
@@ -233,8 +233,8 @@ stages:
     outs:
     - path: 2023-isb-multisite/README.md
       hash: md5
-      md5: ca030a986c6ee20bf4c860aa4d939daa
-      size: 19748
+      md5: 1403e58b941085bf479ea63b73fca614
+      size: 19770
   plot-t-category@2021-usz-oropharynx:
     cmd: "uv run scripts/t_category.py 2021-usz-oropharynx/data.csv\n"
     deps:
@@ -535,8 +535,8 @@ stages:
       size: 82624
     - path: scripts/drop_cols.py
       hash: md5
-      md5: dc4bbeffb5e69044ae1d46851920cc02
-      size: 1033
+      md5: d1a0ca51fafc08e4acd4e3582a030fe2
+      size: 853
     outs:
     - path: 2025-hvh-oropharynx/data.csv
       hash: md5
@@ -544,6 +544,97 @@ stages:
       size: 69228
   clean@2025-hvh-oropharynx/tmp.csv:
     cmd: "rm -f 2025-hvh-oropharynx/tmp.csv\n"
+  lyproxify@3:
+    cmd: "uvx --with-requirements 2025-ksa-oral-cavity/requirements.in lyscripts data
+      lyproxify --input-file 2025-ksa-oral-cavity/raw.csv --output-file 2025-ksa-oral-cavity/_lyproxified.csv
+      --mapping-file 2025-ksa-oral-cavity/mapping.py --num-header-rows 1\n"
+    deps:
+    - path: 2025-ksa-oral-cavity/mapping.py
+      hash: md5
+      md5: a9790866019880227b983e922dc4ac72
+      size: 16691
+    - path: 2025-ksa-oral-cavity/raw.csv
+      hash: md5
+      md5: 63fe886e1195ea6f65faaceb75fcfed4
+      size: 69592
+    outs:
+    - path: 2025-ksa-oral-cavity/_lyproxified.csv
+      hash: md5
+      md5: 9b28083dd564cfdcf0eb3a0865a92866
+      size: 15900
+  description-and-docs@2025-ksa-oral-cavity:
+    cmd: "uv run scripts/render.py -m 2025-ksa-oral-cavity/mapping.py -d 2025-ksa-oral-cavity/data.csv
+      -t 2025-ksa-oral-cavity/README.md.jinja -o 2025-ksa-oral-cavity/README.md\n"
+    deps:
+    - path: 2025-ksa-oral-cavity/README.md.jinja
+      hash: md5
+      md5: afed6adc0ff9507a9a11446e76be4264
+      size: 2761
+    - path: 2025-ksa-oral-cavity/data.csv
+      hash: md5
+      md5: d1c1df3209b7dcc172e594401d3346bb
+      size: 16301
+    - path: 2025-ksa-oral-cavity/mapping.py
+      hash: md5
+      md5: a9790866019880227b983e922dc4ac72
+      size: 16691
+    - path: scripts/render.py
+      hash: md5
+      md5: 5ce21bd0d2137793d04c74008ae9fd87
+      size: 2621
+    outs:
+    - path: 2025-ksa-oral-cavity/README.md
+      hash: md5
+      md5: 7d7e6b5bc668eec4ab83484afbdc52cd
+      size: 9594
+  plot-t-category@2025-ksa-oral-cavity:
+    cmd: "uv run scripts/t_category.py 2025-ksa-oral-cavity/data.csv\n"
+    deps:
+    - path: 2025-ksa-oral-cavity/data.csv
+      hash: md5
+      md5: d1c1df3209b7dcc172e594401d3346bb
+      size: 16301
+    - path: scripts/t_category.py
+      hash: md5
+      md5: 533580c28a708f7ae40fff720b385452
+      size: 2219
+    outs:
+    - path: 2025-ksa-oral-cavity/figures/t_category.png
+      hash: md5
+      md5: 570968a02ffd967202ac3aeb23df0da7
+      size: 28363
+  plot-age-and-sex@2025-ksa-oral-cavity:
+    cmd: "uv run scripts/age_and_sex.py 2025-ksa-oral-cavity/data.csv\n"
+    deps:
+    - path: 2025-ksa-oral-cavity/data.csv
+      hash: md5
+      md5: d1c1df3209b7dcc172e594401d3346bb
+      size: 16301
+    - path: scripts/age_and_sex.py
+      hash: md5
+      md5: f261a84aa41ba6e270d36aae25ffc846
+      size: 3700
+    outs:
+    - path: 2025-ksa-oral-cavity/figures/age_and_sex.png
+      hash: md5
+      md5: c8e637c43f4b3472f410360307ea3313
+      size: 47368
+  plot-subsite@2025-ksa-oral-cavity:
+    cmd: "uv run scripts/subsite.py --data 2025-ksa-oral-cavity/data.csv\n"
+    deps:
+    - path: 2025-ksa-oral-cavity/data.csv
+      hash: md5
+      md5: d1c1df3209b7dcc172e594401d3346bb
+      size: 16301
+    - path: scripts/subsite.py
+      hash: md5
+      md5: 7904e25c43d20cd10b8ec090103417fc
+      size: 5683
+    outs:
+    - path: 2025-ksa-oral-cavity/figures/subsite.png
+      hash: md5
+      md5: 1743f9b5be1e5920f19b9da27e633454
+      size: 86168
   lyproxify-umcg@radiotherapy:
     cmd: "uvx --with-requirements 2025-umcg-hypopharynx-larynx/requirements.in lyscripts
       data lyproxify --input-file 2025-umcg-hypopharynx-larynx/raw_radiotherapy.csv
@@ -675,10 +766,10 @@ stages:
       md5: abc2c69fd9ede2150c036d3a1f3e8c1c
       size: 45953
   fix-tumor-side-add-linenumber-and-institution:
-    cmd: sed 's/ambiguous/central/g' 2025-usz-hypopharynx-larynx/parsed.csv |
-      sed 's/\([0-9]\{2\}\)\.\([0-9]\{2\}\)\.\([0-9]\{4\}\)/\3-\2-\1/g' | sed
-      's/^,/University Hospital Zurich,/' | nl -v'-3' -n'rz' -s',' -w4 | sed
-      's/^\-00[1-3],//' | sed 's/^id,/id,institution,/' | sed
+    cmd: sed 's/ambiguous/central/g' 2025-usz-hypopharynx-larynx/parsed.csv | 
+      sed 's/\([0-9]\{2\}\)\.\([0-9]\{2\}\)\.\([0-9]\{4\}\)/\3-\2-\1/g' | sed 
+      's/^,/University Hospital Zurich,/' | nl -v'-3' -n'rz' -s',' -w4 | sed 
+      's/^\-00[1-3],//' | sed 's/^id,/id,institution,/' | sed 
       's/^patient,/patient,patient,/' | sed 's/^#,/#,#,/' | sed '4,$s/^/USZ/g' |
       sed -E '2s/(#|1|info)/core/g' > 2025-usz-hypopharynx-larynx/_tmp.csv
     deps:
@@ -790,10 +881,10 @@ stages:
       md5: 7bc2cc26acc6ecf4d50589be89c63463
       size: 36298
   fix-2025-usz-dates-and-add-institution:
-    cmd: sed 's/ambiguous/central/g' 2025-usz-hypopharynx-larynx/parsed.csv |
-      sed 's/^,/University Hospital Zurich,/' | sed
-      's/^patient,/patient,patient,/' | sed 's/^core,/core,core,/' | sed
-      's/^id,/id,institution,/' | sed '4,$s/^/,/g' >
+    cmd: sed 's/ambiguous/central/g' 2025-usz-hypopharynx-larynx/parsed.csv | 
+      sed 's/^,/University Hospital Zurich,/' | sed 
+      's/^patient,/patient,patient,/' | sed 's/^core,/core,core,/' | sed 
+      's/^id,/id,institution,/' | sed '4,$s/^/,/g' > 
       2025-usz-hypopharynx-larynx/_with_institution.csv
     deps:
     - path: 2025-usz-hypopharynx-larynx/parsed.csv
@@ -988,8 +1079,8 @@ stages:
     deps:
     - path: 2025-umcg-hypopharynx-larynx/README.md.jinja
       hash: md5
-      md5: 90367dc08208e1e86e3aa92ca84ab570
-      size: 3094
+      md5: d540df5f1e346b6f99dd68634a2f0728
+      size: 2975
     - path: 2025-umcg-hypopharynx-larynx/data.csv
       hash: md5
       md5: 026dd7d406de4390e83a297be12dcd6e
@@ -1005,8 +1096,8 @@ stages:
     outs:
     - path: 2025-umcg-hypopharynx-larynx/README.md
       hash: md5
-      md5: ec17fdcd4b1331a732f774602ae5362e
-      size: 13279
+      md5: 375f0910d90cc315f41b5a628a33e553
+      size: 13160
   assign-unique-ids@1:
     cmd: "uv run scripts/assign_ids.py 2021-usz-oropharynx --input-csv no_ids.csv
       --output-csv _to_cast.csv\n"
@@ -1378,10 +1469,10 @@ stages:
       md5: 5e3926a0a470342c2812112e1f39cbd5
       size: 44550
   fix-2025-usz-add-institution:
-    cmd: sed 's/ambiguous,,/central,True,/g'
-      2025-usz-hypopharynx-larynx/parsed.csv | sed 's/^,/University Hospital
-      Zurich,/' | sed 's/^patient,/patient,patient,/' | sed
-      's/^core,/core,core,/' | sed 's/^id,/id,institution,/' | sed '4,$s/^/,/g'
+    cmd: sed 's/ambiguous,,/central,True,/g' 
+      2025-usz-hypopharynx-larynx/parsed.csv | sed 's/^,/University Hospital 
+      Zurich,/' | sed 's/^patient,/patient,patient,/' | sed 
+      's/^core,/core,core,/' | sed 's/^id,/id,institution,/' | sed '4,$s/^/,/g' 
       > 2025-usz-hypopharynx-larynx/_with_institution.csv
     deps:
     - path: 2025-usz-hypopharynx-larynx/parsed.csv
@@ -1641,3 +1732,47 @@ stages:
       hash: md5
       md5: 1be88bed8f9ece3d198a5cc2b5187892
       size: 26166
+  assign-unique-ids@8:
+    cmd: "uv run scripts/assign_ids.py 2025-ksa-oral-cavity --input-csv _lyproxified.csv
+      --output-csv _to_cast.csv\n"
+    deps:
+    - path: 2025-ksa-oral-cavity/_lyproxified.csv
+      hash: md5
+      md5: 9b28083dd564cfdcf0eb3a0865a92866
+      size: 15900
+    - path: scripts/assign_ids.py
+      hash: md5
+      md5: c0fbab360f3b10166bc62913ea6562e9
+      size: 2611
+    outs:
+    - path: 2025-ksa-oral-cavity/_to_cast.csv
+      hash: md5
+      md5: d1c1df3209b7dcc172e594401d3346bb
+      size: 16301
+  cast-dtypes@2025-ksa-oral-cavity:
+    cmd: "uv run scripts/cast.py 2025-ksa-oral-cavity/_to_cast.csv 2025-ksa-oral-cavity/data.csv\n"
+    deps:
+    - path: 2025-ksa-oral-cavity/_to_cast.csv
+      hash: md5
+      md5: d1c1df3209b7dcc172e594401d3346bb
+      size: 16301
+    - path: scripts/cast.py
+      hash: md5
+      md5: d4072e8ee32f03be61db252b001f33b3
+      size: 895
+    outs:
+    - path: 2025-ksa-oral-cavity/data.csv
+      hash: md5
+      md5: d1c1df3209b7dcc172e594401d3346bb
+      size: 16301
+  validate@2025-ksa-oral-cavity:
+    cmd: "uv run scripts/validate.py 2025-ksa-oral-cavity/data.csv\n"
+    deps:
+    - path: 2025-ksa-oral-cavity/data.csv
+      hash: md5
+      md5: d1c1df3209b7dcc172e594401d3346bb
+      size: 16301
+    - path: scripts/validate.py
+      hash: md5
+      md5: fc3a75a544e983040a8e8a31197fb425
+      size: 1020

@@ -1,9 +1,7 @@
 # 2025 USZ Hypopharynx Larynx
 
-> [!WARNING]
-> This data has not been published in a peer-reviewed journal yet (although it has been submitted to the *Data in Brief* journal). Therefore, its content may still change.
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16962705.svg)](https://doi.org/10.5281/zenodo.16962705)
+[![Green Journal](https://img.shields.io/badge/Rad%20Onc-j.radonc.2025.111319-3e6e0e)](https://doi.org/10.1016/j.radonc.2025.111319)
+[![Zenodo Badge](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.16962705-informational)](https://doi.org/10.5281/zenodo.16962705)
 
 This folder contains the detailed patterns of lymphatic progression of 365 patients with squamous cell carcinomas (SCCs) in the hypopharynx and larynx, treated at the University Hospital Zurich (USZ) between 2013 and 2021.
 

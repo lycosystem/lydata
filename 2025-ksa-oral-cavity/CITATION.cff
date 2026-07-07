@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+title: "lyDATA: 2025 KSA Oral Cavity"
+abstract: >-
+  Data on patterns of lymphatic progression in oral cavity SCC patients
+  treated at KSA.
+message: >-
+  If you use this dataset, please cite it using the metadata from this file.
+type: dataset
+authors:
+  - given-names: Annika
+    family-names: Sütsch
+    affiliation: Cantonal Hospital Aarau
+  - given-names: Sonja
+    family-names: Stieb
+    affiliation: Cantonal Hospital Aarau
+  - given-names: Noemi
+    family-names: Bührer
+    email: noemi.buehrer@usz.ch
+    affiliation: University Hospital Zurich
+    orcid: https://orcid.org/0009-0009-8307-9896
+  - given-names: Roman
+    family-names: Ludwig
+    affiliation: University Hospital Zurich
+    orcid: https://orcid.org/0000-0001-9434-328X
+  - given-names: Yoel
+    family-names: Pérez Haas
+    affiliation: University Hospital Zurich
+    orcid: https://orcid.org/0000-0002-4282-0643
+  - given-names: Oliver
+    family-names: Riesterer
+    affiliation: Cantonal Hospital Aarau
+    orcid: https://orcid.org/0000-0002-9508-0546
+  - given-names: Jan
+    family-names: Unkelbach
+    email: jan.unkelbach@usz.ch
+    affiliation: University Hospital Zurich
+    orcid: https://orcid.org/0000-0002-4275-990X
+url: https://github.com/lycosystem/lydata/tree/main/2025-ksa-oral-cavity
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.18231357
+    description: "Zenodo indexed version of dataset"
+license: CC-BY-SA-4.0
+date-released: '2026-07-07'

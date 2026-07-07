@@ -35,7 +35,7 @@ We have published a paper about it in *Radiotherapy & Oncology* [[9]](#9) (a pre
 
 [![Green Journal](https://img.shields.io/badge/Rad%20Onc-j.radonc.2021.01.028-3e6e0e)](https://doi.org/10.1016/j.radonc.2021.01.028)
 [![Data-in-Brief badge](https://img.shields.io/badge/DiB-10.1016%2Fj.dib.2023.110020-orange)](https://doi.org/10.1016/j.dib.2023.110020)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10204085.svg)](https://doi.org/10.5281/zenodo.10204085)
+[![Zenodo Badge](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.10204085-informational)](https://doi.org/10.5281/zenodo.10204085)
 
 We are glad and thankful that the research group around Prof. Vincent Grégoire from the [Centre Léon Bérard] in Lyon (France) have joined our effort to create a database of lymphatic patterns of progression by providing us with the data underlying their publication [[6]](#6). If you use this data, don't forget to cite either said publication or use the `CITATION.cff` file inside the `2021-clb-oropharynx` folder, where the `data.csv` also resides and a description of the data named `README.md`.
 
@@ -45,7 +45,7 @@ We are glad and thankful that the research group around Prof. Vincent Grégoire 
 ### 📂 [2023 ISB Multisite]
 
 [![Data-in-Brief badge](https://img.shields.io/badge/DiB-10.1016%2Fj.dib.2023.110020-orange)](https://doi.org/10.1016/j.dib.2023.110020)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10210423.svg)](https://doi.org/10.5281/zenodo.10210423)
+[![Zenodo Badge](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.10210423-informational)](https://doi.org/10.5281/zenodo.10210423)
 
 As part of a collaboration with researchers from the [Inselspital Bern] (Switzerland) around Prof. Roland Giger, we are thankful and glad to be able to publish a large and exceptionally detailed dataset on lymphatic progression of HNSCC patients, assessed by pathology. In contrast to earlier datasets, this includes not only patients with oropharyngeal tumors, but also oral cavity, hypopharynx and larynx.
 
@@ -55,7 +55,7 @@ As part of a collaboration with researchers from the [Inselspital Bern] (Switzer
 ### 📂 [2023 CLB Multisite]
 
 [![Data-in-Brief badge](https://img.shields.io/badge/DiB-10.1016%2Fj.dib.2023.110020-orange)](https://doi.org/10.1016/j.dib.2023.110020)
-[![Zenodo Badge](https://zenodo.org/badge/DOI/10.5281/zenodo.10210361.svg)](https://doi.org/10.5281/zenodo.10210361)
+[![Zenodo Badge](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.10210361-informational)](https://doi.org/10.5281/zenodo.10210361)
 
 Completing the "2021 CLB Oropharynx" data table, these patient records detail lymphatic involvement patterns in HNSCC patients with primary tumors beyond the oropharynx. Again, they are thankfully provided by researchers in Prof. Vincent Grégoire's group and the data was extracted at the [Centre Léon Bérard].
 
@@ -71,46 +71,50 @@ We are excited to announce that Dr. Sergi Benavente from the [Hospital Vall d'He
 [2025 HVH Oropharynx]: https://github.com/lycosystem/lydata/tree/main/2025-hvh-multisite
 [Hospital Vall d'Hebron]: https://hospital.vallhebron.com/en
 
-### 📂 [2025 UKF Hypopharynx]
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16963000.svg)](https://doi.org/10.5281/zenodo.16963000)
-
-> [!WARNING]
-> The dataset in the form presented here has not yet been published in a peer-reviewed journal. Content may still change until it has been accepted.
-
-We collaborated with the researchers at the [University Hospital Freiburg] (UKF) to provide a dataset on lymphatic progression patterns in patients with hypopharyngeal SCC. The dataset includes 54 patients and their lymphatic progression patterns for all available diagnostic modalities separately.
-
-[2025 UKF Hypopharynx]: https://github.com/lycosystem/lyDATA/tree/main/2025-ukf-hypopharynx
-[University Hospital Freiburg]: https://www.uniklinik-freiburg.de/en/uniklinikum.html
-
 ### 📂 [2025 UMCG Hypopharynx Larynx]
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16962870.svg)](https://doi.org/10.5281/zenodo.16962870)
+[![Green Journal](https://img.shields.io/badge/Rad%20Onc-j.radonc.2025.111319-3e6e0e)](https://doi.org/10.1016/j.radonc.2025.111319)
+[![Zenodo Badge](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.16962871-informational)](https://doi.org/10.5281/zenodo.16962871)
 
 Through a collaboration with researchers at the [University Medical Center Groningen] (UMCG) in the Netherlands, we are able to share a large dataset on lymphatic progression patterns in patients with hypopharyngeal and laryngeal SCC. The dataset also includes some patients that underwent neck dissection and for which the lymphatic involvement was assessed pathologically.
-
-> [!WARNING]
-> These records are still under review at *Data in Brief*. There may still be changes to the dataset until it has been accepted.
 
 [2025 UMCG Hypopharynx Larynx]: https://github.com/lycosystem/lyDATA/tree/main/2025-umcg-hypopharynx-larynx
 [University Medical Center Groningen]: https://www.umcg.nl/en
 
 ### 📂 [2025 USZ Hypopharynx Larynx]
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16962705.svg)](https://doi.org/10.5281/zenodo.16962705)
-
-> [!WARNING]
-> The dataset in the form presented here has not yet been published in a peer-reviewed journal. Content may still change until it has been accepted.
+[![Green Journal](https://img.shields.io/badge/Rad%20Onc-j.radonc.2025.111319-3e6e0e)](https://doi.org/10.1016/j.radonc.2025.111319)
+[![Zenodo Badge](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.16962706-informational)](https://doi.org/10.5281/zenodo.16962706)
 
 This folder contains the detailed patterns of lymphatic progression of 365 patients with squamous cell carcinomas (SCCs) in the hypopharynx and larynx, treated at the University Hospital Zurich (USZ) between 2013 and 2021.
 
 [2025 USZ Hypopharynx Larynx]: https://github.com/lycosystem/lyDATA/tree/main/2025-usz-hypopharynx-larynx
 
+### 📂 [2025 UKF Hypopharynx]
+
+[![Green Journal](https://img.shields.io/badge/Rad%20Onc-j.radonc.2025.111319-3e6e0e)](https://doi.org/10.1016/j.radonc.2025.111319)
+[![Zenodo Badge](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.16963001-informational)](https://doi.org/10.5281/zenodo.16963001)
+
+We collaborated with the researchers at the [University Hospital Freiburg] (UKF) to provide a dataset on lymphatic progression patterns in patients with hypopharyngeal SCC. The dataset includes 54 patients and their lymphatic progression patterns for all available diagnostic modalities separately.
+
+[2025 UKF Hypopharynx]: https://github.com/lycosystem/lyDATA/tree/main/2025-ukf-hypopharynx
+[University Hospital Freiburg]: https://www.uniklinik-freiburg.de/en/uniklinikum.html
+
+### 📂 [2025 KSA Oral Cavity]
+
+[![Zenodo Badge](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.18231357-informational)](https://doi.org/10.5281/zenodo.18231357)
+
+Thanks to a collaboration with the research group around Prof. Oliver Riesterer at the [Kantonsspital Aarau] (KSA) we are able to share a dataset on lymphatic progression patterns in patients with oral cavity SCC. The dataset contains 66 patients treated at the [Kantonsspital Aarau] between 2016 and 2023.
+
+[2025 KSA Oral Cavity]: https://github.com/lycosystem/lyDATA/tree/main/2025-ksa-oral-cavity
+[Kantonsspital Aarau]: https://www.ksa.ch/de
+
 ### 🔭 stay tuned for more
 
-We are always in the process of collecting more data that we might publish soon. If you would like to contribute to our effort, feel free to contact us: [roman.ludwig@usz.ch]
+We are always in the process of collecting more data that we might publish soon. If you would like to contribute to our effort, feel free to contact us: [yoel.perezhaas@usz.ch], [noemi.buehrer@usz.ch]
 
-[roman.ludwig@usz.ch]: mailto:roman.ludwig@usz.ch
+[yoel.perezhaas@usz.ch]: mailto:yoel.perezhaas@usz.ch
+[noemi.buehrer@usz.ch]: mailto:noemi.buehrer@usz.ch
 
 ## Python Library
 
